@@ -1,0 +1,3101 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>גיימינג בחינוך · סילבוס הקורס</title>
+  <meta name="description" content="קורס גיימינג בחינוך — לימוד מיומנויות דרך משחקי מחשב · 29 מפגשים · 7 עולמות">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Rubik:wght@400;500;700;900&family=Heebo:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #fdf4e3;
+      --cream-shade: #f5ead0;
+      --ink: #1a1a1a;
+      --pink: #ff4f93;
+      --yellow: #ffd23f;
+      --mint: #6ee7b7;
+      --lavender: #a78bfa;
+      --orange: #fb923c;
+      --sky: #38bdf8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+    /* make sure anchor targets aren't hidden behind the sticky nav */
+    :target, section[id], header[id], .world-panel[id] { scroll-margin-top: 90px; }
+
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: 'Rubik', 'Heebo', system-ui, sans-serif;
+      font-weight: 400;
+      line-height: 1.55;
+      min-height: 100vh;
+      overflow-x: hidden;
+      /* halftone dot texture — subtle Riso feel */
+      background-image:
+        radial-gradient(circle at 1px 1px, rgba(26,26,26,0.07) 1.1px, transparent 1.1px);
+      background-size: 22px 22px;
+    }
+
+    ::selection { background: var(--yellow); color: var(--ink); }
+
+    /* global focus ring */
+    :focus-visible {
+      outline: 3px solid var(--pink);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    /* ---------- NAVIGATION ---------- */
+    .site-nav {
+      background: var(--pink);
+      border-bottom: 4px solid var(--ink);
+      padding: 16px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .logo {
+      font-family: 'Rubik', sans-serif;
+      font-weight: 900;
+      font-size: 22px;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .logo .star {
+      display: inline-block;
+      animation: spin 10s linear infinite;
+      transform-origin: center;
+    }
+    @keyframes spin {
+      from { transform: rotate(0); }
+      to { transform: rotate(360deg); }
+    }
+    .nav-menu {
+      display: flex;
+      gap: 6px;
+      list-style: none;
+      align-items: center;
+    }
+    .nav-menu a {
+      font-family: 'Space Grotesk', sans-serif;
+      text-transform: uppercase;
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: 0.14em;
+      color: var(--ink);
+      text-decoration: none;
+      padding: 8px 14px;
+      border: 2px solid transparent;
+      border-radius: 100px;
+      transition: all 0.15s cubic-bezier(.2,.9,.3,1.2);
+      display: inline-block;
+    }
+    .nav-menu a:hover,
+    .nav-menu a:focus-visible {
+      background: var(--cream);
+      border-color: var(--ink);
+      transform: rotate(-2deg) translateY(-2px);
+      outline: none;
+    }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      position: relative;
+      padding: 72px 40px 110px;
+      max-width: 1240px;
+      margin: 0 auto;
+      min-height: 600px;
+    }
+    .hero-inner {
+      position: relative;
+      z-index: 3;
+      max-width: 820px;
+    }
+    .eyebrow {
+      display: inline-block;
+      background: var(--ink);
+      color: var(--cream);
+      padding: 10px 22px;
+      border-radius: 100px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 12.5px;
+      letter-spacing: 0.2em;
+      transform: rotate(-2deg);
+      box-shadow: 4px 4px 0 var(--pink);
+      margin-bottom: 36px;
+    }
+    .hero h1 {
+      font-family: 'Rubik', 'Heebo', sans-serif;
+      font-weight: 900;
+      font-size: clamp(46px, 8.8vw, 92px);
+      line-height: 0.94;
+      letter-spacing: -0.035em;
+      color: var(--ink);
+      margin-bottom: 36px;
+    }
+    .hero h1 .dot { color: var(--pink); }
+
+    /* highlighter effect — tilted rectangle behind a word */
+    .hl {
+      position: relative;
+      display: inline-block;
+      z-index: 1;
+      padding: 0 0.14em;
+      white-space: nowrap;
+    }
+    .hl::before {
+      content: '';
+      position: absolute;
+      inset: 12% -6% 10% -6%;
+      background: var(--yellow);
+      border: 3px solid var(--ink);
+      border-radius: 10px;
+      transform: rotate(-2deg);
+      z-index: -1;
+    }
+    .hl.mint::before { background: var(--mint); transform: rotate(1.6deg); }
+    .hl.lavender::before { background: var(--lavender); transform: rotate(-1.2deg); }
+    .hl.orange::before { background: var(--orange); transform: rotate(2deg); }
+
+    .hero-sub {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(17px, 1.6vw, 21px);
+      line-height: 1.55;
+      max-width: 560px;
+      margin-bottom: 44px;
+      color: #2a2a2a;
+      font-weight: 500;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      font-family: 'Rubik', sans-serif;
+      font-weight: 700;
+      font-size: 17px;
+      padding: 15px 26px;
+      border: 3px solid var(--ink);
+      border-radius: 12px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: transform 0.12s ease, box-shadow 0.12s ease;
+      color: var(--ink);
+      background: var(--cream);
+    }
+    .btn svg { display: inline-block; }
+    .btn-primary {
+      background: var(--ink);
+      color: var(--cream);
+      box-shadow: 6px 6px 0 var(--pink);
+    }
+    .btn-primary:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0 var(--pink); }
+    .btn-primary:active { transform: translate(3px, 3px); box-shadow: 2px 2px 0 var(--pink); }
+
+    .btn-secondary { box-shadow: 6px 6px 0 var(--yellow); }
+    .btn-secondary:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0 var(--yellow); }
+    .btn-secondary:active { transform: translate(3px, 3px); box-shadow: 2px 2px 0 var(--yellow); }
+
+    /* ---------- STICKERS scattered in hero ---------- */
+    .sticker { position: absolute; z-index: 1; pointer-events: none; }
+    .sticker.wiggle { animation: wiggle 5s ease-in-out infinite; transform-origin: center; }
+    @keyframes wiggle {
+      0%, 100% { transform: rotate(var(--rot, 0deg)); }
+      50% { transform: rotate(calc(var(--rot, 0deg) + 3deg)); }
+    }
+
+    /* physical positions — works in RTL because stickers are absolute decoration */
+    .sticker-badge {
+      top: 60px;
+      left: 48px;
+      --rot: -10deg;
+      animation-delay: -1s;
+    }
+    .sticker-star {
+      top: 40px;
+      right: 40px;
+      --rot: 8deg;
+    }
+    .sticker-pixels {
+      top: 260px;
+      right: 120px;
+      --rot: -6deg;
+      animation-delay: -2.5s;
+    }
+    .sticker-controller {
+      bottom: 40px;
+      left: 140px;
+      --rot: 14deg;
+      animation-delay: -3.5s;
+    }
+    .sticker-circle-text {
+      bottom: 100px;
+      right: 40px;
+      --rot: -4deg;
+      animation-delay: -1.8s;
+    }
+    .sticker-tape {
+      top: 280px;
+      left: 380px;
+      --rot: -18deg;
+    }
+
+    /* ---------- STATS BAR ---------- */
+    .stats {
+      background: var(--ink);
+      color: var(--cream);
+      border-top: 4px solid var(--ink);
+      border-bottom: 4px solid var(--ink);
+      padding: 48px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    .stats-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 48px;
+      position: relative;
+      z-index: 2;
+    }
+    .stat {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .stat-num {
+      font-family: 'Rubik', sans-serif;
+      font-weight: 900;
+      font-size: clamp(48px, 6vw, 72px);
+      line-height: 1;
+      letter-spacing: -0.03em;
+    }
+    .stat-num.yellow { color: var(--yellow); }
+    .stat-num.mint { color: var(--mint); }
+    .stat-num.pink { color: var(--pink); }
+    .stat-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      opacity: 0.8;
+    }
+    .stat-note {
+      font-family: 'Rubik', sans-serif;
+      font-size: 14px;
+      margin-top: 4px;
+      opacity: 0.75;
+    }
+    /* decorative slanted tape on stats */
+    .stats::before {
+      content: '★ PLAY ★ BUILD ★ LEARN ★ PLAY ★ BUILD ★ LEARN ★ PLAY ★ BUILD ★ LEARN ★';
+      position: absolute;
+      top: -20px;
+      left: -10%;
+      right: -10%;
+      background: var(--yellow);
+      color: var(--ink);
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      font-size: 14px;
+      padding: 8px 0;
+      text-align: center;
+      transform: rotate(-1.2deg);
+      border-top: 3px solid var(--ink);
+      border-bottom: 3px solid var(--ink);
+      white-space: nowrap;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    /* ---------- WORLDS ---------- */
+    .worlds {
+      background: var(--ink);
+      color: var(--cream);
+      padding: 110px 40px 130px;
+      position: relative;
+      overflow: hidden;
+      border-top: 4px solid var(--ink);
+    }
+    .worlds-header {
+      max-width: 1240px;
+      margin: 0 auto 70px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 40px;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 3;
+    }
+    .worlds-header .eyebrow-sm {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--yellow);
+      margin-bottom: 16px;
+      display: inline-block;
+      border: 2px solid var(--yellow);
+      padding: 6px 14px;
+      border-radius: 100px;
+    }
+    .worlds-header h2 {
+      font-family: 'Rubik', 'Heebo', sans-serif;
+      font-weight: 900;
+      font-size: clamp(52px, 9vw, 108px);
+      letter-spacing: -0.04em;
+      line-height: 0.92;
+    }
+    .worlds-header h2 .star-inline {
+      color: var(--pink);
+      display: inline-block;
+      margin-inline-start: 12px;
+      animation: spin 12s linear infinite;
+    }
+    .worlds-header .head-blurb {
+      font-family: 'Space Grotesk', sans-serif;
+      max-width: 340px;
+      line-height: 1.55;
+      font-size: 15.5px;
+      color: #d9cfb0;
+    }
+
+    .worlds-grid {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      position: relative;
+      z-index: 3;
+    }
+    @media (max-width: 960px) { .worlds-grid { grid-template-columns: repeat(2, 1fr); gap: 22px; } }
+    @media (max-width: 560px) { .worlds-grid { grid-template-columns: 1fr; } }
+
+    .world-card {
+      background: var(--cream);
+      color: var(--ink);
+      border: 3px solid var(--ink);
+      border-radius: 14px;
+      overflow: hidden;
+      position: relative;
+      transition: transform 0.18s cubic-bezier(.3,.9,.4,1.1), box-shadow 0.18s ease;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+    }
+    .world-card.tilt-left { transform: rotate(-0.8deg); }
+    .world-card.tilt-right { transform: rotate(0.9deg); }
+    .world-card:hover,
+    .world-card:focus-visible {
+      transform: translate(-3px, -3px) rotate(0) !important;
+      outline: none;
+    }
+    .world-card.shadow-yellow { box-shadow: 6px 6px 0 var(--yellow); }
+    .world-card.shadow-mint { box-shadow: 6px 6px 0 var(--mint); }
+    .world-card.shadow-pink { box-shadow: 6px 6px 0 var(--pink); }
+    .world-card.shadow-orange { box-shadow: 6px 6px 0 var(--orange); }
+    .world-card.shadow-lavender { box-shadow: 6px 6px 0 var(--lavender); }
+    .world-card.shadow-sky { box-shadow: 6px 6px 0 var(--sky); }
+    .world-card.shadow-yellow:hover { box-shadow: 11px 11px 0 var(--yellow); }
+    .world-card.shadow-mint:hover { box-shadow: 11px 11px 0 var(--mint); }
+    .world-card.shadow-pink:hover { box-shadow: 11px 11px 0 var(--pink); }
+    .world-card.shadow-orange:hover { box-shadow: 11px 11px 0 var(--orange); }
+    .world-card.shadow-lavender:hover { box-shadow: 11px 11px 0 var(--lavender); }
+    .world-card.shadow-sky:hover { box-shadow: 11px 11px 0 var(--sky); }
+
+    .world-illustration {
+      height: 150px;
+      border-bottom: 3px solid var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .world-card[data-world="1"] .world-illustration { background: #e4d5ff; }
+    .world-card[data-world="2"] .world-illustration { background: #ffd9b3; }
+    .world-card[data-world="3"] .world-illustration { background: #fff0a0; }
+    .world-card[data-world="4"] .world-illustration { background: #ffcee0; }
+    .world-card[data-world="5"] .world-illustration { background: #cee6ff; }
+    .world-card[data-world="6"] .world-illustration { background: #c6f4dc; }
+    .world-card[data-world="7"] .world-illustration { background: #ffe4a8; }
+    .world-card[data-world="8"] .world-illustration { background: #1a1a1a; }
+
+    .world-body {
+      padding: 22px 24px 26px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1;
+    }
+    .world-meta {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #555;
+    }
+    .world-meta .dot-sep { color: #bbb; }
+    .world-meta .pill {
+      background: var(--ink);
+      color: var(--cream);
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+    }
+    .world-meta .pill.new { background: var(--pink); }
+    .world-meta .pill.boss { background: var(--yellow); color: var(--ink); }
+
+    .world-title {
+      font-family: 'Rubik', 'Heebo', sans-serif;
+      font-weight: 900;
+      font-size: 26px;
+      line-height: 1.08;
+      letter-spacing: -0.025em;
+    }
+    .world-desc {
+      font-family: 'Rubik', sans-serif;
+      font-size: 14.5px;
+      line-height: 1.55;
+      color: #333;
+    }
+    .world-arrow {
+      margin-top: auto;
+      padding-top: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+    .world-arrow .arrow {
+      transition: transform 0.2s ease;
+      display: inline-block;
+    }
+    .world-card:hover .world-arrow .arrow { transform: translateX(-6px); }
+
+    /* special stickers on cards */
+    .card-sticker {
+      position: absolute;
+      z-index: 5;
+      padding: 6px 14px;
+      border: 3px solid var(--ink);
+      border-radius: 40px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      font-size: 11px;
+      pointer-events: none;
+    }
+    .card-sticker.boss {
+      top: -14px;
+      left: -10px;
+      background: var(--pink);
+      color: var(--cream);
+      transform: rotate(-8deg);
+      box-shadow: 3px 3px 0 var(--yellow);
+    }
+    .card-sticker.new {
+      top: -14px;
+      right: -10px;
+      background: var(--yellow);
+      color: var(--ink);
+      transform: rotate(8deg);
+      box-shadow: 3px 3px 0 var(--pink);
+    }
+
+    /* BOSS world 8 illustration text color */
+    .world-card[data-world="8"] .world-illustration svg .on-dark { stroke: var(--cream); }
+    .world-card[data-world="8"] .world-illustration svg .on-dark-fill { fill: var(--cream); }
+
+    /* Decorative gaming elements in worlds bg */
+    .worlds-deco {
+      position: absolute;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.09;
+    }
+    .deco-wasd { top: 80px; right: 6%; }
+    .deco-dpad { bottom: 60px; left: 4%; }
+    .deco-heart { top: 45%; right: 2%; }
+    .deco-cursor { top: 20%; left: 8%; }
+
+    /* ---------- SESSIONS (accordion) ---------- */
+    .sessions {
+      background: var(--cream);
+      padding: 120px 40px 140px;
+      position: relative;
+      border-top: 4px solid var(--ink);
+    }
+    .sessions-header {
+      max-width: 900px;
+      margin: 0 auto 64px;
+      text-align: center;
+      position: relative;
+    }
+    .sessions-header .eyebrow-sm {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--ink);
+      background: var(--yellow);
+      padding: 7px 18px;
+      border-radius: 100px;
+      border: 3px solid var(--ink);
+      display: inline-block;
+      transform: rotate(-2deg);
+      margin-bottom: 28px;
+      box-shadow: 3px 3px 0 var(--pink);
+    }
+    .sessions-header h2 {
+      font-family: 'Rubik', 'Heebo', sans-serif;
+      font-weight: 900;
+      font-size: clamp(44px, 7vw, 84px);
+      letter-spacing: -0.035em;
+      line-height: 0.95;
+      margin-bottom: 14px;
+    }
+    .sessions-header p {
+      font-family: 'Space Grotesk', sans-serif;
+      color: #555;
+      font-size: 15px;
+    }
+
+    .sessions-accordion {
+      max-width: 1060px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .world-panel {
+      background: var(--cream);
+      border: 3px solid var(--ink);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: box-shadow 0.2s ease, transform 0.2s ease;
+    }
+    .world-panel[data-world="1"] { box-shadow: 6px 6px 0 var(--yellow); }
+    .world-panel[data-world="2"] { box-shadow: 6px 6px 0 var(--mint); }
+    .world-panel[data-world="3"] { box-shadow: 6px 6px 0 var(--pink); }
+    .world-panel[data-world="4"] { box-shadow: 6px 6px 0 var(--orange); }
+    .world-panel[data-world="5"] { box-shadow: 6px 6px 0 var(--lavender); }
+    .world-panel[data-world="6"] { box-shadow: 6px 6px 0 var(--sky); }
+    .world-panel[data-world="7"] { box-shadow: 6px 6px 0 var(--pink); }
+    .world-panel[data-world="8"] { box-shadow: 6px 6px 0 var(--yellow); }
+
+    .world-panel summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 22px 28px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      background: var(--cream);
+      border-bottom: 3px solid transparent;
+      transition: background 0.15s, border-color 0.2s;
+    }
+    .world-panel summary::-webkit-details-marker { display: none; }
+    .world-panel summary::marker { content: ''; }
+    .world-panel[open] summary { border-bottom-color: var(--ink); }
+    .world-panel summary:hover { background: var(--cream-shade); }
+    .world-panel summary:focus-visible { outline: 3px solid var(--pink); outline-offset: -6px; }
+
+    .panel-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      color: var(--ink);
+      background: var(--yellow);
+      border: 3px solid var(--ink);
+      border-radius: 8px;
+      padding: 8px 14px;
+      transform: rotate(-4deg);
+      flex-shrink: 0;
+      box-shadow: 2px 2px 0 var(--ink);
+    }
+    .world-panel[data-world="7"] .panel-num { background: var(--pink); color: var(--cream); }
+    .world-panel[data-world="8"] .panel-num { background: var(--ink); color: var(--yellow); }
+
+    .panel-title { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+    .panel-title h3 {
+      font-family: 'Rubik', 'Heebo', sans-serif;
+      font-weight: 900;
+      font-size: clamp(22px, 2.6vw, 28px);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+    .panel-meta {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 12px;
+      color: #555;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-weight: 600;
+    }
+    .panel-meta .boss-tag {
+      background: var(--pink);
+      color: var(--cream);
+      padding: 2px 8px;
+      border-radius: 40px;
+      margin-inline-start: 4px;
+    }
+    .panel-meta .new-tag {
+      background: var(--lavender);
+      color: var(--cream);
+      padding: 2px 8px;
+      border-radius: 40px;
+      margin-inline-start: 4px;
+    }
+
+    .panel-toggle {
+      width: 44px;
+      height: 44px;
+      border: 3px solid var(--ink);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-family: 'Rubik', sans-serif;
+      font-weight: 900;
+      font-size: 22px;
+      background: var(--cream);
+      transition: transform 0.3s ease, background 0.2s, color 0.2s;
+      flex-shrink: 0;
+    }
+    .world-panel[open] .panel-toggle {
+      background: var(--pink);
+      color: var(--cream);
+      transform: rotate(135deg);
+    }
+
+    .session-list {
+      padding: 20px 28px 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      animation: fadeSlide 0.3s cubic-bezier(.3,.9,.4,1.1);
+    }
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .session {
+      border: 3px solid var(--ink);
+      border-radius: 10px;
+      padding: 16px 20px;
+      background: var(--cream);
+      position: relative;
+    }
+    .session-head {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+    .session-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      color: var(--cream);
+      background: var(--ink);
+      padding: 7px 10px;
+      border-radius: 6px;
+      flex-shrink: 0;
+      line-height: 1;
+      min-width: 44px;
+      text-align: center;
+    }
+    .session-title-block { flex: 1; min-width: 0; }
+    .session-title-block h4 {
+      font-family: 'Rubik', 'Heebo', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: -0.01em;
+      margin-bottom: 7px;
+      line-height: 1.2;
+    }
+    .session-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .tag {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 40px;
+      border: 2px solid var(--ink);
+      background: var(--cream);
+      color: var(--ink);
+      line-height: 1.4;
+    }
+    .tag.pink { background: var(--pink); color: var(--cream); }
+    .tag.yellow { background: var(--yellow); }
+    .tag.mint { background: var(--mint); }
+    .tag.lavender { background: var(--lavender); color: var(--cream); }
+    .tag.orange { background: var(--orange); color: var(--cream); }
+    .tag.sky { background: var(--sky); color: var(--cream); }
+
+    .session-desc {
+      font-family: 'Rubik', sans-serif;
+      font-size: 14.5px;
+      line-height: 1.6;
+      color: #2a2a2a;
+      margin: 4px 0 14px;
+    }
+    .session-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .link-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'Rubik', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      color: var(--ink);
+      background: var(--cream);
+      border: 2.5px solid var(--ink);
+      border-radius: 20px;
+      padding: 6px 13px;
+      text-decoration: none;
+      transition: transform 0.12s, box-shadow 0.12s;
+      box-shadow: 2px 2px 0 var(--ink);
+      line-height: 1.1;
+    }
+    .link-chip:hover { transform: translate(-1px, -1px); box-shadow: 3px 3px 0 var(--ink); }
+    .link-chip:active { transform: translate(1px, 1px); box-shadow: 1px 1px 0 var(--ink); }
+    .link-chip:focus-visible { outline: 3px solid var(--pink); outline-offset: 2px; }
+    .link-chip .icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 12px;
+      height: 12px;
+    }
+    .link-chip.play { background: var(--pink); color: var(--cream); }
+    .link-chip.slides { background: var(--yellow); }
+    .link-chip.video { background: var(--sky); color: var(--cream); }
+    .link-chip.quiz { background: var(--mint); }
+    .link-chip.ai { background: var(--lavender); color: var(--cream); }
+    .link-chip.link { background: var(--cream); }
+    .link-chip.wiki { background: var(--orange); color: var(--cream); }
+
+    /* session thumbnail — game screenshot */
+    .session.has-thumb {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      grid-template-areas:
+        "head thumb"
+        "desc thumb"
+        "links thumb";
+      gap: 10px 20px;
+      align-items: start;
+    }
+    .session.has-thumb .session-head { grid-area: head; margin-bottom: 0; }
+    .session.has-thumb .session-thumb { grid-area: thumb; align-self: center; }
+    .session.has-thumb .session-desc { grid-area: desc; margin: 0; }
+    .session.has-thumb .session-links { grid-area: links; }
+    .session-thumb {
+      width: 118px;
+      height: 88px;
+      border: 3px solid var(--ink);
+      border-radius: 6px;
+      overflow: hidden;
+      background: var(--cream-shade);
+      position: relative;
+      flex-shrink: 0;
+    }
+    .session-thumb img,
+    .session-thumb > svg {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .session-thumb .credit {
+      position: absolute;
+      bottom: 3px;
+      inset-inline-start: 3px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 8px;
+      color: var(--cream);
+      background: rgba(0,0,0,0.72);
+      padding: 1px 4px;
+      border-radius: 2px;
+      letter-spacing: 0.05em;
+    }
+    .session-thumb.t-pink { transform: rotate(-2deg); box-shadow: 4px 4px 0 var(--pink); }
+    .session-thumb.t-yellow { transform: rotate(2deg); box-shadow: 4px 4px 0 var(--yellow); }
+    .session-thumb.t-mint { transform: rotate(-1.2deg); box-shadow: 4px 4px 0 var(--mint); }
+    .session-thumb.t-sky { transform: rotate(1.4deg); box-shadow: 4px 4px 0 var(--sky); }
+
+    @media (max-width: 560px) {
+      .session.has-thumb {
+        grid-template-columns: 1fr;
+        grid-template-areas: "head" "thumb" "desc" "links";
+      }
+      .session.has-thumb .session-thumb { width: 100%; height: 140px; justify-self: center; }
+    }
+
+    @media (max-width: 720px) {
+      .sessions { padding: 72px 18px 100px; }
+      .world-panel summary { padding: 18px 16px; gap: 12px; }
+      .panel-num { padding: 6px 10px; font-size: 11px; }
+      .panel-title h3 { font-size: 19px; }
+      .panel-toggle { width: 38px; height: 38px; font-size: 20px; }
+      .session-list { padding: 16px 14px 22px; }
+      .session { padding: 14px; }
+    }
+
+    /* ---------- PRACTICAL INFO ---------- */
+    .practical {
+      background: var(--cream);
+      padding: 100px 40px 120px;
+      position: relative;
+      border-top: 4px solid var(--ink);
+    }
+    .practical-header {
+      max-width: 1240px;
+      margin: 0 auto 60px;
+      text-align: center;
+    }
+    .practical-header .eyebrow-sm {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--cream);
+      background: var(--ink);
+      padding: 7px 18px;
+      border-radius: 100px;
+      border: 3px solid var(--ink);
+      display: inline-block;
+      transform: rotate(1.5deg);
+      margin-bottom: 26px;
+      box-shadow: 3px 3px 0 var(--mint);
+    }
+    .practical-header h2 {
+      font-family: 'Rubik', 'Heebo', sans-serif;
+      font-weight: 900;
+      font-size: clamp(42px, 7vw, 78px);
+      letter-spacing: -0.035em;
+      line-height: 0.95;
+    }
+
+    .practical-grid {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+    @media (max-width: 960px) { .practical-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 520px) { .practical-grid { grid-template-columns: 1fr; } }
+
+    .info-card {
+      background: var(--cream);
+      border: 3px solid var(--ink);
+      border-radius: 14px;
+      padding: 24px 22px 26px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+    .info-card:nth-child(1) { box-shadow: 6px 6px 0 var(--yellow); transform: rotate(-0.6deg); }
+    .info-card:nth-child(2) { box-shadow: 6px 6px 0 var(--mint); }
+    .info-card:nth-child(3) { box-shadow: 6px 6px 0 var(--pink); transform: rotate(0.6deg); }
+    .info-card:nth-child(4) { box-shadow: 6px 6px 0 var(--sky); }
+    .info-card:hover {
+      transform: translate(-2px, -2px) rotate(0) !important;
+    }
+    .info-card:nth-child(1):hover { box-shadow: 10px 10px 0 var(--yellow); }
+    .info-card:nth-child(2):hover { box-shadow: 10px 10px 0 var(--mint); }
+    .info-card:nth-child(3):hover { box-shadow: 10px 10px 0 var(--pink); }
+    .info-card:nth-child(4):hover { box-shadow: 10px 10px 0 var(--sky); }
+
+    .info-icon {
+      width: 56px;
+      height: 56px;
+      border: 3px solid var(--ink);
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      transform: rotate(-4deg);
+    }
+    .info-card:nth-child(1) .info-icon { background: var(--yellow); }
+    .info-card:nth-child(2) .info-icon { background: var(--mint); }
+    .info-card:nth-child(3) .info-icon { background: var(--pink); color: var(--cream); }
+    .info-card:nth-child(4) .info-icon { background: var(--sky); color: var(--cream); }
+    .info-card h3 {
+      font-family: 'Rubik', 'Heebo', sans-serif;
+      font-weight: 900;
+      font-size: 22px;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+    .info-card p {
+      font-family: 'Rubik', sans-serif;
+      font-size: 14px;
+      line-height: 1.55;
+      color: #2a2a2a;
+    }
+    .info-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-family: 'Rubik', sans-serif;
+      font-size: 13.5px;
+      line-height: 1.45;
+    }
+    .info-card ul li {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    .info-card ul li::before {
+      content: '★';
+      color: var(--pink);
+      font-size: 11px;
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+
+    /* ---------- CONTACT ---------- */
+    .contact {
+      background: var(--cream-shade);
+      padding: 100px 40px 120px;
+      position: relative;
+      border-top: 4px solid var(--ink);
+    }
+    .contact-header {
+      max-width: 720px;
+      margin: 0 auto 48px;
+      text-align: center;
+    }
+    .contact-header .eyebrow-sm {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--cream);
+      background: var(--ink);
+      padding: 7px 18px;
+      border-radius: 100px;
+      border: 3px solid var(--ink);
+      display: inline-block;
+      transform: rotate(-1.5deg);
+      margin-bottom: 26px;
+      box-shadow: 3px 3px 0 var(--pink);
+    }
+    .contact-header h2 {
+      font-family: 'Rubik', 'Heebo', sans-serif;
+      font-weight: 900;
+      font-size: clamp(42px, 7vw, 72px);
+      letter-spacing: -0.035em;
+      line-height: 0.95;
+      margin-bottom: 18px;
+    }
+    .contact-header p {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 17px;
+      line-height: 1.55;
+      color: #2a2a2a;
+    }
+    .contact-form {
+      max-width: 640px;
+      margin: 0 auto;
+      background: var(--cream);
+      border: 3px solid var(--ink);
+      border-radius: 16px;
+      padding: 32px 30px;
+      box-shadow: 8px 8px 0 var(--mint);
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .contact-form .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .contact-form label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+    .contact-form input,
+    .contact-form textarea {
+      font-family: 'Rubik', sans-serif;
+      font-size: 15px;
+      color: var(--ink);
+      background: var(--cream);
+      border: 2.5px solid var(--ink);
+      border-radius: 10px;
+      padding: 12px 14px;
+      width: 100%;
+      transition: box-shadow 0.15s, transform 0.15s;
+    }
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      outline: none;
+      box-shadow: 4px 4px 0 var(--pink);
+      transform: translate(-1px, -1px);
+    }
+    .contact-form textarea {
+      resize: vertical;
+      min-height: 130px;
+    }
+    .contact-form .submit-row {
+      display: flex;
+      justify-content: flex-start;
+      margin-top: 6px;
+    }
+    .contact-form button {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      background: var(--ink);
+      color: var(--cream);
+      border: 3px solid var(--ink);
+      border-radius: 100px;
+      padding: 12px 28px;
+      cursor: pointer;
+      box-shadow: 6px 6px 0 var(--yellow);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .contact-form button:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 8px 8px 0 var(--yellow);
+    }
+    .contact-form button:active {
+      transform: translate(3px, 3px);
+      box-shadow: 2px 2px 0 var(--yellow);
+    }
+    .form-status {
+      font-family: 'Rubik', sans-serif;
+      font-size: 14px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      display: none;
+    }
+    .form-status.success {
+      display: block;
+      background: var(--mint);
+      border: 2px solid var(--ink);
+      color: var(--ink);
+    }
+    .form-status.error {
+      display: block;
+      background: #ffb3b3;
+      border: 2px solid var(--ink);
+      color: var(--ink);
+    }
+    @media (max-width: 560px) {
+      .contact { padding: 72px 18px 90px; }
+      .contact-form { padding: 24px 20px; }
+    }
+
+    /* ---------- FOOTER ---------- */
+    .site-footer {
+      background: var(--pink);
+      border-top: 4px solid var(--ink);
+      padding: 48px 40px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    .footer-tape {
+      position: absolute;
+      inset-inline: -5%;
+      top: -18px;
+      background: var(--ink);
+      color: var(--yellow);
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      font-size: 13px;
+      padding: 7px 0;
+      text-align: center;
+      transform: rotate(1.5deg);
+      border-top: 3px solid var(--ink);
+      border-bottom: 3px solid var(--ink);
+      white-space: nowrap;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .footer-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 32px;
+      padding-top: 20px;
+      position: relative;
+      z-index: 2;
+    }
+    @media (max-width: 720px) {
+      .footer-inner { grid-template-columns: 1fr; gap: 24px; }
+    }
+    .footer-brand h3 {
+      font-family: 'Rubik', 'Heebo', sans-serif;
+      font-weight: 900;
+      font-size: clamp(28px, 4vw, 38px);
+      color: var(--ink);
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+    .footer-brand p {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px;
+      color: var(--ink);
+      max-width: 380px;
+      line-height: 1.5;
+    }
+    .footer-col h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--ink);
+    }
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .footer-col ul a {
+      font-family: 'Rubik', sans-serif;
+      font-size: 14px;
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 500;
+      transition: opacity 0.15s;
+    }
+    .footer-col ul a:hover { opacity: 0.7; text-decoration: underline; }
+
+    .footer-bottom {
+      max-width: 1240px;
+      margin: 40px auto 0;
+      padding-top: 20px;
+      border-top: 2px dashed var(--ink);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ink);
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 900px) {
+      .nav-menu { gap: 0; }
+      .nav-menu a { padding: 6px 10px; font-size: 12px; letter-spacing: 0.08em; }
+      .hero { padding: 48px 22px 80px; }
+      .hero h1 { font-size: clamp(38px, 11vw, 64px); }
+      .sticker-tape, .sticker-pixels, .sticker-circle-text { display: none; }
+      .sticker-badge { top: 30px; left: 14px; }
+      .sticker-badge svg { width: 80px; height: 80px; }
+      .sticker-star { top: 20px; right: 14px; }
+      .sticker-star svg { width: 80px; height: 80px; }
+      .sticker-controller { bottom: 10px; left: 20px; }
+      .sticker-controller svg { width: 90px; height: 70px; }
+      .stats-inner { grid-template-columns: 1fr; gap: 28px; }
+      .stats { padding: 56px 22px 36px; }
+      .site-nav { padding: 14px 18px; }
+      .logo { font-size: 18px; }
+    }
+    @media (max-width: 480px) {
+      .hero-ctas { flex-direction: column; align-items: stretch; }
+      .btn { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============ NAV ============ -->
+  <nav class="site-nav" aria-label="ראשי">
+    <a href="#top" class="logo" aria-label="גיימינג בחינוך — לדף הבית">
+      <span class="star" aria-hidden="true">★</span>
+      <span>גיימינג בחינוך</span>
+    </a>
+    <ul class="nav-menu">
+      <li><a href="#worlds">עולמות</a></li>
+      <li><a href="#sessions">מפגשים</a></li>
+      <li><a href="#about">על הקורס</a></li>
+      <li><a href="#contact">צור קשר</a></li>
+    </ul>
+  </nav>
+
+  <!-- ============ HERO ============ -->
+  <header class="hero" id="top">
+
+    <!-- Sticker: circle badge with orbiting text -->
+    <div class="sticker sticker-badge wiggle" aria-hidden="true">
+      <svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <path id="circlePath" d="M 64,64 m -46,0 a 46,46 0 1,1 92,0 a 46,46 0 1,1 -92,0"/>
+        </defs>
+        <circle cx="64" cy="64" r="58" fill="#ff4f93" stroke="#1a1a1a" stroke-width="3"/>
+        <circle cx="64" cy="64" r="32" fill="#fdf4e3" stroke="#1a1a1a" stroke-width="3"/>
+        <text font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="12" fill="#1a1a1a" letter-spacing="2">
+          <textPath href="#circlePath" startOffset="0">★ PLAY ★ LEARN ★ BUILD ★ LEVEL UP ★</textPath>
+        </text>
+        <text x="64" y="70" text-anchor="middle" font-family="'Rubik', sans-serif" font-weight="900" font-size="22" fill="#1a1a1a">29</text>
+      </svg>
+    </div>
+
+    <!-- Sticker: yellow star -->
+    <div class="sticker sticker-star wiggle" aria-hidden="true">
+      <svg width="110" height="110" viewBox="0 0 110 110" xmlns="http://www.w3.org/2000/svg">
+        <path d="M55 6 L67 40 L103 42 L74 64 L85 98 L55 79 L25 98 L36 64 L7 42 L43 40 Z"
+              fill="#ffd23f" stroke="#1a1a1a" stroke-width="3" stroke-linejoin="round"/>
+        <circle cx="55" cy="55" r="10" fill="#1a1a1a"/>
+      </svg>
+    </div>
+
+    <!-- Sticker: pixel grid -->
+    <div class="sticker sticker-pixels wiggle" aria-hidden="true">
+      <svg width="96" height="96" viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg">
+        <rect x="3" y="3" width="90" height="90" fill="#a78bfa" stroke="#1a1a1a" stroke-width="3" rx="8"/>
+        <g fill="#1a1a1a">
+          <rect x="18" y="18" width="14" height="14"/>
+          <rect x="50" y="18" width="14" height="14"/>
+          <rect x="34" y="34" width="14" height="14"/>
+          <rect x="66" y="34" width="14" height="14"/>
+          <rect x="18" y="50" width="14" height="14"/>
+          <rect x="50" y="50" width="14" height="14"/>
+          <rect x="34" y="66" width="14" height="14"/>
+          <rect x="66" y="66" width="14" height="14"/>
+        </g>
+      </svg>
+    </div>
+
+    <!-- Sticker: game controller -->
+    <div class="sticker sticker-controller wiggle" aria-hidden="true">
+      <svg width="130" height="96" viewBox="0 0 130 96" xmlns="http://www.w3.org/2000/svg">
+        <path d="M30 14 Q10 14 8 40 L4 74 Q4 90 20 90 Q32 90 40 76 L52 56 L78 56 L90 76 Q98 90 110 90 Q126 90 126 74 L122 40 Q120 14 100 14 Z"
+              fill="#6ee7b7" stroke="#1a1a1a" stroke-width="3" stroke-linejoin="round"/>
+        <!-- d-pad -->
+        <rect x="20" y="38" width="26" height="8" fill="#1a1a1a"/>
+        <rect x="29" y="29" width="8" height="26" fill="#1a1a1a"/>
+        <!-- buttons -->
+        <circle cx="96" cy="36" r="5" fill="#ff4f93" stroke="#1a1a1a" stroke-width="2"/>
+        <circle cx="108" cy="48" r="5" fill="#ffd23f" stroke="#1a1a1a" stroke-width="2"/>
+        <circle cx="84" cy="48" r="5" fill="#38bdf8" stroke="#1a1a1a" stroke-width="2"/>
+        <circle cx="96" cy="60" r="5" fill="#fdf4e3" stroke="#1a1a1a" stroke-width="2"/>
+      </svg>
+    </div>
+
+    <!-- Sticker: circle with text -->
+    <div class="sticker sticker-circle-text wiggle" aria-hidden="true">
+      <svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="44" fill="#38bdf8" stroke="#1a1a1a" stroke-width="3"/>
+        <text x="50" y="42" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="9" fill="#1a1a1a" letter-spacing="1.5">LEVEL</text>
+        <text x="50" y="62" text-anchor="middle" font-family="'Rubik', sans-serif" font-weight="900" font-size="24" fill="#1a1a1a">UP!</text>
+        <text x="50" y="80" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="600" font-size="8" fill="#1a1a1a" letter-spacing="2">IRL</text>
+      </svg>
+    </div>
+
+    <!-- Sticker: washi tape strip -->
+    <div class="sticker sticker-tape" aria-hidden="true">
+      <svg width="150" height="34" viewBox="0 0 150 34" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="2" width="150" height="30" fill="#fb923c" stroke="#1a1a1a" stroke-width="2" opacity="0.92"/>
+        <g stroke="#1a1a1a" stroke-width="2">
+          <line x1="15" y1="8" x2="15" y2="26"/>
+          <line x1="35" y1="8" x2="35" y2="26"/>
+          <line x1="55" y1="8" x2="55" y2="26"/>
+          <line x1="75" y1="8" x2="75" y2="26"/>
+          <line x1="95" y1="8" x2="95" y2="26"/>
+          <line x1="115" y1="8" x2="115" y2="26"/>
+          <line x1="135" y1="8" x2="135" y2="26"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="hero-inner">
+      <div class="eyebrow">◆ למידה דרך משחק ◆</div>
+
+      <h1>
+        משחקים<span class="dot">.</span>
+        <span class="hl">בונים</span><span class="dot">.</span>
+        <span class="hl mint">לומדים</span><span class="dot">.</span>
+      </h1>
+
+      <p class="hero-sub">
+        בקורס נשחק במשחקי מחשב, נלמד מיומנויות שונות, נכיר ז'אנרים שונים ומכניקות מגוונות,
+        ועקרונות בעיצוב משחקים ושלבים. לסיום נבנה בעזרת <span class="hl orange" style="font-weight:700">בינה מלאכותית</span>
+        משחקים תוך שימוש בעקרונות שלמדנו.
+      </p>
+
+      <div class="hero-ctas">
+        <a href="#worlds" class="btn btn-primary">
+          <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 1 L12 7 L2 13 Z" fill="currentColor"/></svg>
+          יאללה נתחיל
+        </a>
+        <a href="#sessions" class="btn btn-secondary">הסילבוס המלא</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ STATS BAR ============ -->
+  <section class="stats" aria-label="מספרי הקורס">
+    <div class="stats-inner">
+      <div class="stat">
+        <div class="stat-num yellow">35</div>
+        <div class="stat-label">Levels · מפגשים</div>
+        <div class="stat-note">ממפגש פתיחה ועד משחק משלך — כולל AI</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num mint">8</div>
+        <div class="stat-label">Worlds · עולמות</div>
+        <div class="stat-note">יצירתיות, אסטרטגיה, מיינקראפט, AI ועוד</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num pink">40+</div>
+        <div class="stat-label">Games · משחקים</div>
+        <div class="stat-note">מריו, Mini Metro, Baba Is You, מיינקראפט ועוד</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WORLDS ============ -->
+  <section class="worlds" id="worlds">
+
+    <!-- decorative gaming elements (background) -->
+    <svg class="worlds-deco deco-wasd" width="180" height="180" viewBox="0 0 180 180" aria-hidden="true">
+      <g fill="#fdf4e3" stroke="#fdf4e3" stroke-width="3">
+        <rect x="64" y="4" width="52" height="52" rx="8" fill="none"/>
+        <text x="90" y="40" text-anchor="middle" font-family="'Space Grotesk'" font-weight="700" font-size="24" stroke="none" fill="#fdf4e3">W</text>
+        <rect x="4" y="64" width="52" height="52" rx="8" fill="none"/>
+        <text x="30" y="100" text-anchor="middle" font-family="'Space Grotesk'" font-weight="700" font-size="24" stroke="none" fill="#fdf4e3">A</text>
+        <rect x="64" y="64" width="52" height="52" rx="8" fill="none"/>
+        <text x="90" y="100" text-anchor="middle" font-family="'Space Grotesk'" font-weight="700" font-size="24" stroke="none" fill="#fdf4e3">S</text>
+        <rect x="124" y="64" width="52" height="52" rx="8" fill="none"/>
+        <text x="150" y="100" text-anchor="middle" font-family="'Space Grotesk'" font-weight="700" font-size="24" stroke="none" fill="#fdf4e3">D</text>
+      </g>
+    </svg>
+
+    <svg class="worlds-deco deco-dpad" width="180" height="180" viewBox="0 0 180 180" aria-hidden="true">
+      <g fill="none" stroke="#fdf4e3" stroke-width="3">
+        <path d="M60 10 h60 v50 h50 v60 h-50 v50 h-60 v-50 h-50 v-60 h50 Z"/>
+        <circle cx="90" cy="45" r="8"/>
+        <circle cx="135" cy="90" r="8"/>
+        <circle cx="90" cy="135" r="8"/>
+        <circle cx="45" cy="90" r="8"/>
+      </g>
+    </svg>
+
+    <svg class="worlds-deco deco-heart" width="140" height="130" viewBox="0 0 140 130" aria-hidden="true">
+      <g fill="none" stroke="#fdf4e3" stroke-width="3">
+        <path d="M10 30 v20 h10 v10 h10 v10 h10 v10 h10 v10 h10 v10 h10 v-10 h10 v-10 h10 v-10 h10 v-10 h10 v-10 h10 v-20 h-10 v-10 h-20 v10 h-10 v10 h-10 v-10 h-10 v-10 h-20 v10 Z"/>
+      </g>
+    </svg>
+
+    <svg class="worlds-deco deco-cursor" width="100" height="120" viewBox="0 0 100 120" aria-hidden="true">
+      <g fill="none" stroke="#fdf4e3" stroke-width="3">
+        <path d="M15 10 L15 90 L35 75 L48 100 L60 95 L48 70 L75 65 Z"/>
+      </g>
+    </svg>
+
+    <!-- header -->
+    <div class="worlds-header">
+      <div>
+        <div class="eyebrow-sm">◆ World Map · מפת הקורס</div>
+        <h2>העולמות<span class="star-inline">★</span></h2>
+      </div>
+      <p class="head-blurb">
+        שמונה עולמות. כל אחד מכוון למיומנות אחרת. חלק עם משחק בודד עמוק,
+        חלק עם סדרה של ז'אנרים — ובסוף, עולם שלם שמיוחד לבנייה שלכם עם AI.
+      </p>
+    </div>
+
+    <!-- grid -->
+    <div class="worlds-grid">
+
+      <!-- World 1: Creativity -->
+      <a href="#w1" class="world-card shadow-yellow tilt-left" data-world="1" aria-label="עולם 1 — יצירתיות וחשיפה">
+        <div class="world-illustration">
+          <svg width="200" height="140" viewBox="0 0 200 140" aria-hidden="true">
+            <!-- palette -->
+            <g transform="translate(28 35)">
+              <path d="M8 40 Q8 6 48 6 Q92 6 92 40 Q92 58 72 58 Q62 58 62 52 Q62 44 52 44 Q8 44 8 40 Z"
+                    fill="#ff4f93" stroke="#1a1a1a" stroke-width="3"/>
+              <circle cx="26" cy="22" r="6" fill="#ffd23f" stroke="#1a1a1a" stroke-width="2"/>
+              <circle cx="46" cy="16" r="6" fill="#6ee7b7" stroke="#1a1a1a" stroke-width="2"/>
+              <circle cx="66" cy="24" r="6" fill="#38bdf8" stroke="#1a1a1a" stroke-width="2"/>
+            </g>
+            <!-- pencil -->
+            <g transform="translate(130 50) rotate(35)">
+              <polygon points="-14,8 0,2 0,14" fill="#1a1a1a"/>
+              <polygon points="-9,8 -3,5 -3,11" fill="#ff4f93"/>
+              <rect x="0" y="2" width="48" height="12" fill="#ffd23f" stroke="#1a1a1a" stroke-width="2.5"/>
+              <rect x="44" y="2" width="8" height="12" fill="#ff4f93" stroke="#1a1a1a" stroke-width="2"/>
+              <rect x="52" y="2" width="6" height="12" fill="#1a1a1a"/>
+            </g>
+            <!-- sparkles -->
+            <g fill="#1a1a1a">
+              <path d="M22 106 L25 96 L28 106 L38 109 L28 112 L25 122 L22 112 L12 109 Z"/>
+              <path d="M168 24 L170 17 L172 24 L179 26 L172 28 L170 35 L168 28 L161 26 Z"/>
+              <path d="M158 108 L160 101 L162 108 L169 110 L162 112 L160 119 L158 112 L151 110 Z"/>
+            </g>
+          </svg>
+        </div>
+        <div class="world-body">
+          <div class="world-meta">
+            <span>World 01</span><span class="dot-sep">·</span><span>4 מפגשים</span>
+          </div>
+          <h3 class="world-title">יצירתיות וחשיפה</h3>
+          <p class="world-desc">סקריבל, משחק הניבים, טטריס — מכירים את הקורס, את הז'אנרים, ואת המשחק בתור כלי.</p>
+          <div class="world-arrow"><span>לפרטים</span><span class="arrow">→</span></div>
+        </div>
+      </a>
+
+      <!-- World 2: Problem Solving -->
+      <a href="#w2" class="world-card shadow-mint" data-world="2" aria-label="עולם 2 — פתרון בעיות">
+        <div class="world-illustration">
+          <svg width="200" height="140" viewBox="0 0 200 140" aria-hidden="true">
+            <!-- maze -->
+            <g transform="translate(14 20)">
+              <rect x="0" y="0" width="100" height="100" fill="#fdf4e3" stroke="#1a1a1a" stroke-width="3" rx="4"/>
+              <g stroke="#1a1a1a" stroke-width="3" fill="none" stroke-linecap="round">
+                <line x1="20" y1="0" x2="20" y2="50"/>
+                <line x1="40" y1="20" x2="40" y2="80"/>
+                <line x1="60" y1="0" x2="60" y2="60"/>
+                <line x1="80" y1="30" x2="80" y2="80"/>
+                <line x1="0" y1="80" x2="40" y2="80"/>
+                <line x1="60" y1="30" x2="80" y2="30"/>
+                <line x1="20" y1="50" x2="60" y2="50"/>
+              </g>
+              <circle cx="10" cy="10" r="5" fill="#6ee7b7" stroke="#1a1a1a" stroke-width="2"/>
+              <circle cx="90" cy="92" r="5" fill="#ff4f93" stroke="#1a1a1a" stroke-width="2"/>
+            </g>
+            <!-- key -->
+            <g transform="translate(120 44) rotate(-14)">
+              <circle cx="18" cy="18" r="16" fill="#ffd23f" stroke="#1a1a1a" stroke-width="3"/>
+              <circle cx="18" cy="18" r="6" fill="#fdf4e3" stroke="#1a1a1a" stroke-width="2.5"/>
+              <rect x="33" y="14" width="35" height="8" fill="#ffd23f" stroke="#1a1a1a" stroke-width="3"/>
+              <rect x="55" y="14" width="5" height="13" fill="#ffd23f" stroke="#1a1a1a" stroke-width="2.5"/>
+              <rect x="63" y="14" width="5" height="10" fill="#ffd23f" stroke="#1a1a1a" stroke-width="2.5"/>
+            </g>
+            <text x="146" y="118" font-family="'Rubik'" font-weight="900" font-size="34" fill="#ff4f93" stroke="#1a1a1a" stroke-width="1.5">?</text>
+          </svg>
+        </div>
+        <div class="world-body">
+          <div class="world-meta">
+            <span>World 02</span><span class="dot-sep">·</span><span>4 מפגשים</span>
+          </div>
+          <h3 class="world-title">פתרון בעיות</h3>
+          <p class="world-desc">Prickle, Mini Metro, Baba Is You — אסטרטגיות שונות, חשיבה מיחשובית, איך יוצאים מתקיעות.</p>
+          <div class="world-arrow"><span>לפרטים</span><span class="arrow">→</span></div>
+        </div>
+      </a>
+
+      <!-- World 3: Strategy -->
+      <a href="#w3" class="world-card shadow-pink tilt-right" data-world="3" aria-label="עולם 3 — חשיבה אסטרטגית">
+        <div class="world-illustration">
+          <svg width="200" height="140" viewBox="0 0 200 140" aria-hidden="true">
+            <!-- chess pattern bg -->
+            <g fill="#1a1a1a" opacity="0.12">
+              <rect x="8" y="12" width="16" height="16"/>
+              <rect x="40" y="12" width="16" height="16"/>
+              <rect x="24" y="28" width="16" height="16"/>
+              <rect x="56" y="28" width="16" height="16"/>
+              <rect x="8" y="44" width="16" height="16"/>
+              <rect x="40" y="44" width="16" height="16"/>
+            </g>
+            <!-- tower -->
+            <g transform="translate(90 18)">
+              <rect x="8" y="82" width="80" height="16" fill="#ff4f93" stroke="#1a1a1a" stroke-width="3"/>
+              <rect x="16" y="34" width="64" height="50" fill="#ff4f93" stroke="#1a1a1a" stroke-width="3"/>
+              <rect x="12" y="20" width="10" height="16" fill="#ff4f93" stroke="#1a1a1a" stroke-width="3"/>
+              <rect x="30" y="20" width="10" height="16" fill="#ff4f93" stroke="#1a1a1a" stroke-width="3"/>
+              <rect x="48" y="20" width="10" height="16" fill="#ff4f93" stroke="#1a1a1a" stroke-width="3"/>
+              <rect x="66" y="20" width="10" height="16" fill="#ff4f93" stroke="#1a1a1a" stroke-width="3"/>
+              <rect x="38" y="50" width="20" height="24" fill="#1a1a1a"/>
+              <line x1="48" y1="20" x2="48" y2="0" stroke="#1a1a1a" stroke-width="2.5"/>
+              <path d="M48 2 L76 8 L48 14 Z" fill="#ffd23f" stroke="#1a1a1a" stroke-width="2"/>
+            </g>
+            <!-- target -->
+            <g transform="translate(18 82)">
+              <circle cx="18" cy="18" r="16" fill="#fdf4e3" stroke="#1a1a1a" stroke-width="3"/>
+              <circle cx="18" cy="18" r="10" fill="#ff4f93" stroke="#1a1a1a" stroke-width="2"/>
+              <circle cx="18" cy="18" r="4" fill="#fdf4e3" stroke="#1a1a1a" stroke-width="2"/>
+            </g>
+          </svg>
+        </div>
+        <div class="world-body">
+          <div class="world-meta">
+            <span>World 03</span><span class="dot-sep">·</span><span>4 מפגשים</span>
+          </div>
+          <h3 class="world-title">חשיבה אסטרטגית</h3>
+          <p class="world-desc">Tower Defense, Conflict Craft, Red Alert 2 — תכנון, ניהול משאבים, טורניר כיתתי.</p>
+          <div class="world-arrow"><span>לפרטים</span><span class="arrow">→</span></div>
+        </div>
+      </a>
+
+      <!-- World 4: Finance -->
+      <a href="#w4" class="world-card shadow-orange" data-world="4" aria-label="עולם 4 — אוריינות פיננסית">
+        <div class="world-illustration">
+          <svg width="200" height="140" viewBox="0 0 200 140" aria-hidden="true">
+            <!-- coin stack -->
+            <g transform="translate(22 30)">
+              <ellipse cx="34" cy="80" rx="30" ry="9" fill="#ffd23f" stroke="#1a1a1a" stroke-width="3"/>
+              <rect x="4" y="60" width="60" height="20" fill="#ffd23f"/>
+              <ellipse cx="34" cy="60" rx="30" ry="9" fill="#ffd23f" stroke="#1a1a1a" stroke-width="3"/>
+              <line x1="4" y1="60" x2="4" y2="80" stroke="#1a1a1a" stroke-width="3"/>
+              <line x1="64" y1="60" x2="64" y2="80" stroke="#1a1a1a" stroke-width="3"/>
+              <rect x="4" y="40" width="60" height="20" fill="#ffd23f"/>
+              <ellipse cx="34" cy="40" rx="30" ry="9" fill="#ffd23f" stroke="#1a1a1a" stroke-width="3"/>
+              <line x1="4" y1="40" x2="4" y2="60" stroke="#1a1a1a" stroke-width="3"/>
+              <line x1="64" y1="40" x2="64" y2="60" stroke="#1a1a1a" stroke-width="3"/>
+              <text x="34" y="48" text-anchor="middle" font-family="'Rubik'" font-weight="900" font-size="18" fill="#1a1a1a">$</text>
+            </g>
+            <!-- chart up -->
+            <g transform="translate(110 20)">
+              <rect x="0" y="55" width="14" height="45" fill="#6ee7b7" stroke="#1a1a1a" stroke-width="2.5"/>
+              <rect x="20" y="40" width="14" height="60" fill="#6ee7b7" stroke="#1a1a1a" stroke-width="2.5"/>
+              <rect x="40" y="22" width="14" height="78" fill="#6ee7b7" stroke="#1a1a1a" stroke-width="2.5"/>
+              <rect x="60" y="6" width="14" height="94" fill="#6ee7b7" stroke="#1a1a1a" stroke-width="2.5"/>
+              <path d="M7 54 L27 40 L47 22 L67 6" fill="none" stroke="#ff4f93" stroke-width="3.5" stroke-linecap="round"/>
+              <polygon points="67,6 55,4 60,18" fill="#ff4f93" stroke="#1a1a1a" stroke-width="2"/>
+            </g>
+          </svg>
+        </div>
+        <div class="world-body">
+          <div class="world-meta">
+            <span>World 04</span><span class="dot-sep">·</span><span>2 מפגשים</span>
+          </div>
+          <h3 class="world-title">אוריינות פיננסית</h3>
+          <p class="world-desc">מוכר הלימונדה, המשקיעים הצעירים — רווח, הפסד, מלאי, בורסה בגיל 13.</p>
+          <div class="world-arrow"><span>לפרטים</span><span class="arrow">→</span></div>
+        </div>
+      </a>
+
+      <!-- World 5: Mechanics & Genres -->
+      <a href="#w5" class="world-card shadow-lavender tilt-left" data-world="5" aria-label="עולם 5 — מכניקות וז'אנרים">
+        <div class="world-illustration">
+          <svg width="200" height="140" viewBox="0 0 200 140" aria-hidden="true">
+            <!-- Gear 1 (big) -->
+            <g transform="translate(30 22)">
+              <polygon points="32,0 40,4 40,12 48,8 54,13 50,20 58,21 60,30 52,32 56,40 50,47 42,45 40,53 32,57 24,53 22,45 14,47 8,40 12,32 4,30 6,21 14,20 10,13 16,8 24,12 24,4"
+                fill="#38bdf8" stroke="#1a1a1a" stroke-width="3" stroke-linejoin="round"/>
+              <circle cx="32" cy="29" r="9" fill="#fdf4e3" stroke="#1a1a1a" stroke-width="2.5"/>
+              <circle cx="32" cy="29" r="3" fill="#1a1a1a"/>
+            </g>
+            <!-- Gear 2 (small) -->
+            <g transform="translate(98 60)">
+              <polygon points="24,0 30,2 30,9 37,6 41,12 36,18 43,20 45,27 38,29 42,36 37,41 30,39 30,46 24,48 18,46 18,39 11,41 6,36 10,29 3,27 5,20 12,18 7,12 11,6 18,9 18,2"
+                fill="#fb923c" stroke="#1a1a1a" stroke-width="3" stroke-linejoin="round"/>
+              <circle cx="24" cy="24" r="7" fill="#fdf4e3" stroke="#1a1a1a" stroke-width="2"/>
+              <circle cx="24" cy="24" r="2.5" fill="#1a1a1a"/>
+            </g>
+            <!-- connection line -->
+            <line x1="62" y1="51" x2="98" y2="75" stroke="#1a1a1a" stroke-width="2" stroke-dasharray="3 3"/>
+          </svg>
+        </div>
+        <div class="world-body">
+          <div class="world-meta">
+            <span>World 05</span><span class="dot-sep">·</span><span>9 מפגשים</span>
+          </div>
+          <h3 class="world-title">מכניקות וז'אנרים</h3>
+          <p class="world-desc">2048, Plants vs Zombies, צללים, משחקי ציור ומסר — מפרקים מה גורם למשחק לעבוד.</p>
+          <div class="world-arrow"><span>לפרטים</span><span class="arrow">→</span></div>
+        </div>
+      </a>
+
+      <!-- World 6: Minecraft -->
+      <a href="#w6" class="world-card shadow-sky" data-world="6" aria-label="עולם 6 — מיינקראפט">
+        <div class="world-illustration">
+          <svg width="200" height="140" viewBox="0 0 200 140" aria-hidden="true">
+            <!-- iso cubes -->
+            <g transform="translate(30 30)">
+              <!-- back cube -->
+              <g>
+                <polygon points="20,20 40,10 60,20 40,30" fill="#6ee7b7" stroke="#1a1a1a" stroke-width="2.5"/>
+                <polygon points="20,20 20,40 40,50 40,30" fill="#4dc998" stroke="#1a1a1a" stroke-width="2.5"/>
+                <polygon points="40,30 60,20 60,40 40,50" fill="#3cb583" stroke="#1a1a1a" stroke-width="2.5"/>
+              </g>
+              <!-- left cube (front) -->
+              <g transform="translate(-16 30)">
+                <polygon points="20,20 40,10 60,20 40,30" fill="#fb923c" stroke="#1a1a1a" stroke-width="2.5"/>
+                <polygon points="20,20 20,40 40,50 40,30" fill="#d07324" stroke="#1a1a1a" stroke-width="2.5"/>
+                <polygon points="40,30 60,20 60,40 40,50" fill="#b56420" stroke="#1a1a1a" stroke-width="2.5"/>
+              </g>
+              <!-- right cube -->
+              <g transform="translate(32 30)">
+                <polygon points="20,20 40,10 60,20 40,30" fill="#a78bfa" stroke="#1a1a1a" stroke-width="2.5"/>
+                <polygon points="20,20 20,40 40,50 40,30" fill="#8466da" stroke="#1a1a1a" stroke-width="2.5"/>
+                <polygon points="40,30 60,20 60,40 40,50" fill="#6b4dc2" stroke="#1a1a1a" stroke-width="2.5"/>
+              </g>
+            </g>
+            <!-- pickaxe -->
+            <g transform="translate(118 30) rotate(25)">
+              <rect x="0" y="0" width="14" height="48" fill="#ffd23f" stroke="#1a1a1a" stroke-width="2.5" rx="2"/>
+              <path d="M-18 -5 L36 -5 L36 12 L24 12 L24 8 L-12 8 Z" fill="#38bdf8" stroke="#1a1a1a" stroke-width="3" stroke-linejoin="round"/>
+            </g>
+          </svg>
+        </div>
+        <div class="world-body">
+          <div class="world-meta">
+            <span>World 06</span><span class="dot-sep">·</span><span>6 מפגשים</span>
+          </div>
+          <h3 class="world-title">מיינקראפט</h3>
+          <p class="world-desc">בית, לונה פארק, רד-סטון, קוד עם MakeCode — בנייה משותפת לאורך 6 מפגשים.</p>
+          <div class="world-arrow"><span>לפרטים</span><span class="arrow">→</span></div>
+        </div>
+      </a>
+
+      <!-- World 7: Building with AI (NEW) -->
+      <a href="#w7" class="world-card shadow-pink tilt-right" data-world="7" aria-label="עולם 7 — בונים עם AI (חדש)">
+        <span class="card-sticker new">★ חדש</span>
+        <div class="world-illustration">
+          <svg width="200" height="140" viewBox="0 0 200 140" aria-hidden="true">
+            <!-- robot head -->
+            <g transform="translate(30 30)">
+              <!-- antenna -->
+              <line x1="40" y1="6" x2="40" y2="-6" stroke="#1a1a1a" stroke-width="3"/>
+              <circle cx="40" cy="-8" r="5" fill="#ff4f93" stroke="#1a1a1a" stroke-width="2.5"/>
+              <!-- head -->
+              <rect x="8" y="6" width="64" height="58" rx="10" fill="#a78bfa" stroke="#1a1a1a" stroke-width="3"/>
+              <!-- screen/face -->
+              <rect x="18" y="18" width="44" height="28" rx="4" fill="#fdf4e3" stroke="#1a1a1a" stroke-width="2.5"/>
+              <!-- eyes -->
+              <circle cx="28" cy="32" r="4" fill="#1a1a1a"/>
+              <circle cx="52" cy="32" r="4" fill="#1a1a1a"/>
+              <!-- smile -->
+              <path d="M26 54 Q40 62 54 54" fill="none" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/>
+              <!-- side ears -->
+              <rect x="0" y="24" width="8" height="16" fill="#a78bfa" stroke="#1a1a1a" stroke-width="2.5" rx="2"/>
+              <rect x="72" y="24" width="8" height="16" fill="#a78bfa" stroke="#1a1a1a" stroke-width="2.5" rx="2"/>
+            </g>
+            <!-- lightbulb (idea) -->
+            <g transform="translate(122 18)">
+              <path d="M20 10 Q6 10 6 26 Q6 36 14 42 L14 52 L26 52 L26 42 Q34 36 34 26 Q34 10 20 10 Z"
+                    fill="#ffd23f" stroke="#1a1a1a" stroke-width="3"/>
+              <rect x="14" y="54" width="12" height="4" fill="#1a1a1a"/>
+              <rect x="14" y="60" width="12" height="4" fill="#1a1a1a"/>
+              <!-- rays -->
+              <g stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round">
+                <line x1="20" y1="2" x2="20" y2="-4"/>
+                <line x1="2" y1="14" x2="-4" y2="10"/>
+                <line x1="38" y1="14" x2="44" y2="10"/>
+                <line x1="6" y1="0" x2="2" y2="-4"/>
+                <line x1="34" y1="0" x2="38" y2="-4"/>
+              </g>
+            </g>
+            <!-- spark -->
+            <path d="M160 90 L164 78 L168 90 L180 94 L168 98 L164 110 L160 98 L148 94 Z"
+                  fill="#ff4f93" stroke="#1a1a1a" stroke-width="2.5"/>
+          </svg>
+        </div>
+        <div class="world-body">
+          <div class="world-meta">
+            <span>World 07</span><span class="dot-sep">·</span><span>6 מפגשים</span>
+            <span class="pill new">חדש</span>
+          </div>
+          <h3 class="world-title">בונים עם AI</h3>
+          <p class="world-desc">ChatGPT, Claude, Midjourney, Suno — מעצבים משחק מאפס: רעיון, ספרייטים, מוזיקה, קוד.</p>
+          <div class="world-arrow"><span>לפרטים</span><span class="arrow">→</span></div>
+        </div>
+      </a>
+
+      <!-- World 8: Level Design (BOSS) -->
+      <a href="#w8" class="world-card shadow-yellow" data-world="8" aria-label="עולם 8 — Level Design (BOSS)">
+        <span class="card-sticker boss">★ BOSS</span>
+        <div class="world-illustration">
+          <svg width="200" height="140" viewBox="0 0 200 140" aria-hidden="true">
+            <!-- blueprint grid -->
+            <g stroke="#fdf4e3" stroke-width="0.8" opacity="0.3">
+              <line x1="0" y1="20" x2="200" y2="20"/>
+              <line x1="0" y1="40" x2="200" y2="40"/>
+              <line x1="0" y1="60" x2="200" y2="60"/>
+              <line x1="0" y1="80" x2="200" y2="80"/>
+              <line x1="0" y1="100" x2="200" y2="100"/>
+              <line x1="0" y1="120" x2="200" y2="120"/>
+              <line x1="20" y1="0" x2="20" y2="140"/>
+              <line x1="40" y1="0" x2="40" y2="140"/>
+              <line x1="60" y1="0" x2="60" y2="140"/>
+              <line x1="80" y1="0" x2="80" y2="140"/>
+              <line x1="100" y1="0" x2="100" y2="140"/>
+              <line x1="120" y1="0" x2="120" y2="140"/>
+              <line x1="140" y1="0" x2="140" y2="140"/>
+              <line x1="160" y1="0" x2="160" y2="140"/>
+              <line x1="180" y1="0" x2="180" y2="140"/>
+            </g>
+            <!-- level sketch -->
+            <g fill="none" stroke="#ffd23f" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+              <!-- ground -->
+              <path d="M10 100 L50 100 L50 80 L90 80 L90 100 L130 100 L130 60 L170 60 L170 100 L190 100"/>
+              <!-- platforms -->
+              <line x1="65" y1="55" x2="85" y2="55"/>
+              <line x1="110" y1="40" x2="130" y2="40"/>
+            </g>
+            <!-- start -->
+            <circle cx="22" cy="90" r="7" fill="#6ee7b7" stroke="#1a1a1a" stroke-width="2"/>
+            <text x="22" y="93" text-anchor="middle" font-family="'Space Grotesk'" font-weight="700" font-size="9" fill="#1a1a1a">S</text>
+            <!-- flag / finish -->
+            <g transform="translate(175 30)">
+              <line x1="0" y1="0" x2="0" y2="32" stroke="#fdf4e3" stroke-width="2.5"/>
+              <path d="M0 2 L16 6 L0 12 Z" fill="#ff4f93" stroke="#1a1a1a" stroke-width="2"/>
+            </g>
+            <!-- coins / stars along path -->
+            <g fill="#ffd23f" stroke="#1a1a1a" stroke-width="1.5">
+              <circle cx="70" cy="68" r="4"/>
+              <circle cx="115" cy="30" r="4"/>
+              <circle cx="145" cy="48" r="4"/>
+            </g>
+            <!-- corner spec text (blueprint label) -->
+            <text x="12" y="16" font-family="'Space Grotesk'" font-weight="700" font-size="9" fill="#fdf4e3" letter-spacing="1.5" opacity="0.6">LVL 35 / FINAL</text>
+          </svg>
+        </div>
+        <div class="world-body">
+          <div class="world-meta">
+            <span>World 08</span><span class="dot-sep">·</span><span>מפגש 35</span>
+            <span class="pill boss">BOSS</span>
+          </div>
+          <h3 class="world-title">Level Design</h3>
+          <p class="world-desc">הרמה האחרונה: אחרי שנה של ניתוח ובנייה — מעצבים רמה משלנו ומשחקים אותה בכיתה.</p>
+          <div class="world-arrow"><span>לפרטים</span><span class="arrow">→</span></div>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ============ SESSIONS ACCORDION ============ -->
+  <section class="sessions" id="sessions">
+
+    <!-- icon defs -->
+    <svg style="position:absolute;width:0;height:0" aria-hidden="true">
+      <defs>
+        <symbol id="i-play" viewBox="0 0 12 12"><path d="M2 1L10 6L2 11Z" fill="currentColor"/></symbol>
+        <symbol id="i-slides" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="1.5" width="8" height="9"/><path d="M4 4.5h4M4 6.5h4M4 8.5h3" stroke-linecap="round"/></symbol>
+        <symbol id="i-video" viewBox="0 0 12 12"><rect x="1" y="3" width="8" height="6" fill="currentColor"/><path d="M9 4L11 2V10L9 8Z" fill="currentColor"/></symbol>
+        <symbol id="i-quiz" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2.5" width="8" height="8" rx="1"/><path d="M4 5.5h4M4 7.5h3" stroke-linecap="round"/><rect x="5" y="0.8" width="2" height="2" rx="0.5" fill="currentColor"/></symbol>
+        <symbol id="i-ai" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="8" height="7" rx="1.5"/><circle cx="4.8" cy="6.2" r="0.8" fill="currentColor" stroke="none"/><circle cx="7.2" cy="6.2" r="0.8" fill="currentColor" stroke="none"/><path d="M6 1.5v1.5M5 8.5q1 0.8 2 0" stroke-linecap="round"/></symbol>
+        <symbol id="i-link" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M7 2h3v3M10 2L5.5 6.5M8 7v3H2V4h3"/></symbol>
+        <symbol id="i-wiki" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="8" height="8"/><path d="M2 5h8M5 5v5" stroke-linecap="round"/></symbol>
+        <symbol id="i-music" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="3" cy="9" r="1.5" fill="currentColor" stroke="none"/><circle cx="9" cy="8" r="1.5" fill="currentColor" stroke="none"/><path d="M4.5 9V2l6-1v7" stroke-linejoin="round"/></symbol>
+        <symbol id="i-art" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 1.5C3 1.5 1.5 3.5 1.5 6c0 2 1.5 3.5 3 3.5.5 0 1-.3 1-.8 0-.4-.4-.8-.4-1.2s.4-.8 1-.8h1.8c1.5 0 2.6-1 2.6-2.3 0-1.7-1.5-3-4-3z"/><circle cx="3.5" cy="5" r="0.6" fill="currentColor" stroke="none"/><circle cx="5" cy="3.5" r="0.6" fill="currentColor" stroke="none"/><circle cx="7.5" cy="3" r="0.6" fill="currentColor" stroke="none"/></symbol>
+        <symbol id="i-code" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 3L1 6l3 3M8 3l3 3-3 3"/></symbol>
+      </defs>
+    </svg>
+
+    <div class="sessions-header">
+      <div class="eyebrow-sm">◆ Level by Level · מפגש אחר מפגש</div>
+      <h2>כל ה־<span class="hl mint">35 מפגשים</span></h2>
+      <p>קליק על עולם כדי לפתוח את רשימת המפגשים שלו</p>
+    </div>
+
+    <div class="sessions-accordion">
+
+      <!-- ===== World 1 ===== -->
+      <details class="world-panel" data-world="1" id="w1">
+        <summary>
+          <div class="panel-num">WORLD 01</div>
+          <div class="panel-title">
+            <h3>יצירתיות וחשיפה</h3>
+            <div class="panel-meta">Levels 01-04 · 4 מפגשים</div>
+          </div>
+          <div class="panel-toggle" aria-hidden="true">+</div>
+        </summary>
+        <div class="session-list">
+
+          <article class="session has-thumb">
+            <div class="session-head">
+              <div class="session-num">01</div>
+              <div class="session-title-block">
+                <h4>מפגש חשיפה</h4>
+                <div class="session-tags">
+                  <span class="tag yellow">חשיפה</span>
+                  <span class="tag">יצירתיות</span>
+                </div>
+              </div>
+            </div>
+            <div class="session-thumb t-pink">
+              <img src="assets/games/super-mario.png" alt="Super Mario" loading="lazy">
+              <div class="credit">© Super Mario</div>
+            </div>
+            <p class="session-desc">חשיפה לתכני הקורס: לימוד מיומנויות וגיים דיזיין. מה מחכה לנו בשנה הקרובה.</p>
+            <div class="session-links">
+              <a class="link-chip slides" href="https://gamma.app/docs/-kqq1vvoydija9vx" target="_blank" rel="noopener noreferrer" aria-label="מצגת פתיחה"><svg class="icon"><use href="#i-slides"/></svg>מצגת פתיחה</a>
+              <a class="link-chip play" href="https://supermarioplay.com/fullscreen" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-play"/></svg>סופר מריו</a>
+              <a class="link-chip quiz" href="https://forms.gle/G1qdhvd9yHLFZsS16" target="_blank" rel="noopener noreferrer" aria-label="שאלון"><svg class="icon"><use href="#i-quiz"/></svg>שאלון</a>
+            </div>
+          </article>
+
+          <article class="session has-thumb">
+            <div class="session-head">
+              <div class="session-num">02</div>
+              <div class="session-title-block">
+                <h4>היכרות ויצירתיות</h4>
+                <div class="session-tags">
+                  <span class="tag pink">יצירתיות</span>
+                  <span class="tag">תקשורת</span>
+                  <span class="tag mint">היכרות</span>
+                </div>
+              </div>
+            </div>
+            <div class="session-thumb t-mint">
+              <img src="assets/games/skribbl.png" alt="Skribbl.io" loading="lazy">
+              <div class="credit">© Skribbl.io</div>
+            </div>
+            <p class="session-desc">שני שיעורים ברצף. שאלון שחקן, דיון על "מה נחשב גיימינג", משחק סקריבל משותף.</p>
+            <div class="session-links">
+              <a class="link-chip slides" href="https://gamma.app/docs/-2tbeiczr331vkpf" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-slides"/></svg>מצגת</a>
+              <a class="link-chip quiz" href="https://player-profile-quiz-hebrew.lovable.app/" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-quiz"/></svg>שאלון שחקן</a>
+              <a class="link-chip play" href="https://skribbl.io/" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-play"/></svg>סקריבל</a>
+            </div>
+          </article>
+
+          <article class="session has-thumb">
+            <div class="session-head">
+              <div class="session-num">03</div>
+              <div class="session-title-block">
+                <h4>פלטפורמר</h4>
+                <div class="session-tags">
+                  <span class="tag sky">ז'אנרים</span>
+                  <span class="tag">קואורדינציה</span>
+                  <span class="tag">יצירתיות</span>
+                </div>
+              </div>
+            </div>
+            <div class="session-thumb t-yellow">
+              <img src="assets/games/super-power-rachel.png" alt="Super Power Rachel" loading="lazy">
+              <div class="credit">© Super Power Rachel</div>
+            </div>
+            <p class="session-desc">היכרות עם ז'אנר הפלטפורמר דרך משחקים שונים. בהמשך — הדרכה לפיתוח פלטפורמר ב-Godot.</p>
+            <div class="session-links">
+              <a class="link-chip play" href="https://supermarioplay.com/fullscreen" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-play"/></svg>Super Mario</a>
+              <a class="link-chip play" href="https://xandernt.itch.io/super-power-rachel" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-play"/></svg>Super Power Rachel</a>
+              <a class="link-chip play" href="https://overlearn.itch.io/nivgame" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-play"/></svg>משחק הניבים</a>
+              <a class="link-chip play" href="https://poki.com/il/g/duo-survival" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-play"/></svg>Duo Survival</a>
+            </div>
+          </article>
+
+          <article class="session has-thumb">
+            <div class="session-head">
+              <div class="session-num">04</div>
+              <div class="session-title-block">
+                <h4>ז'אנרים במשחקי מחשב</h4>
+                <div class="session-tags">
+                  <span class="tag sky">ז'אנרים</span>
+                  <span class="tag">חשיבה ביקורתית</span>
+                </div>
+              </div>
+            </div>
+            <div class="session-thumb t-sky">
+              <img src="assets/games/tetris-wiki.png" alt="Tetris" loading="lazy">
+              <div class="credit">© Tetris</div>
+            </div>
+            <p class="session-desc">מצגת על ז'אנרים שונים. חידון. משחק טטריס. דיון על טטריס כטיפול לפוסט-טראומה.</p>
+            <div class="session-links">
+              <a class="link-chip slides" href="https://drive.google.com/file/d/1KzG6tJ7Hh72gspHP0DAo4ZeoHa6gRpJh/preview" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-slides"/></svg>מצגת ז'אנרים</a>
+              <a class="link-chip play" href="https://tetris.com/play-tetris" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-play"/></svg>טטריס</a>
+            </div>
+          </article>
+
+        </div>
+      </details>
+
+      <!-- ===== World 2 ===== -->
+      <details class="world-panel" data-world="2" id="w2">
+        <summary>
+          <div class="panel-num">WORLD 02</div>
+          <div class="panel-title">
+            <h3>פתרון בעיות</h3>
+            <div class="panel-meta">Levels 05-07.5 · 4 מפגשים</div>
+          </div>
+          <div class="panel-toggle" aria-hidden="true">+</div>
+        </summary>
+        <div class="session-list">
+
+          <article class="session has-thumb">
+            <div class="session-head">
+              <div class="session-num">05</div>
+              <div class="session-title-block">
+                <h4>פתרון בעיות — אסטרטגיות</h4>
+                <div class="session-tags">
+                  <span class="tag mint">פתרון בעיות</span>
+                  <span class="tag">אסטרטגיה</span>
+                </div>
+              </div>
+            </div>
+            <div class="session-thumb t-pink">
+              <img src="assets/games/prickle.png" alt="Prickle" loading="lazy">
+              <div class="credit">© Prickle / Sunbird Studio</div>
+            </div>
+            <p class="session-desc">מצגת על אסטרטגיות שונות. משחקים ב-Prickle ומיישמים אסטרטגיות שונות במשימות זהות.</p>
+            <div class="session-links">
+              <a class="link-chip slides" href="https://drive.google.com/file/d/1YOjxAI4s42hT9kfAK_Dg2XCOs96jjLd0/preview" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-slides"/></svg>מצגת</a>
+              <a class="link-chip play" href="https://sunbirdstudio.itch.io/prickle" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-play"/></svg>Prickle</a>
+              <a class="link-chip play" href="https://marblejam-7.onrender.com/" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-play"/></svg>להשחיל את הכדור</a>
+            </div>
+          </article>
+
+          <article class="session has-thumb">
+            <div class="session-head">
+              <div class="session-num">06</div>
+              <div class="session-title-block">
+                <h4>Mini Metro</h4>
+                <div class="session-tags">
+                  <span class="tag mint">פתרון בעיות</span>
+                  <span class="tag lavender">אופטימיזציה</span>
+                  <span class="tag">תחרות</span>
+                </div>
+              </div>
+            </div>
+            <div class="session-thumb t-pink">
+              <img src="assets/games/mini-metro-lesson.png" alt="Mini Metro" loading="lazy">
+              <div class="credit">© Mini Metro Lesson</div>
+            </div>
+            <p class="session-desc">תחרות כיתתית סביב Mini Metro. דיון על ההבדל בין Mini Metro ל-Prickle — מה עושה פאזל "טוב".</p>
+            <div class="session-links">
+              <a class="link-chip play" href="https://shlomn01.github.io/mini-metro-lesson/" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-play"/></svg>Mini Metro</a>
+            </div>
+          </article>
+
+          <article class="session has-thumb">
+            <div class="session-head">
+              <div class="session-num">07</div>
+              <div class="session-title-block">
+                <h4>עריכת וידאו</h4>
+                <div class="session-tags">
+                  <span class="tag mint">פתרון בעיות</span>
+                  <span class="tag">יצירתיות</span>
+                  <span class="tag sky">טכנולוגיה</span>
+                </div>
+              </div>
+            </div>
+            <div class="session-thumb t-yellow">
+              <img src="assets/games/video-editor.gif" alt="Video Editor" loading="lazy">
+              <div class="credit">© Video Editor / nitaymaz</div>
+            </div>
+            <p class="session-desc">פתרון בעיות דרך עריכת וידאו. משחק מגנטים — איך סדר פעולות משפיע על התוצאה.</p>
+            <div class="session-links">
+              <a class="link-chip play" href="https://nitaymaz.itch.io/editor" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-play"/></svg>עריכת וידאו</a>
+              <a class="link-chip play" href="https://prodigalson.itch.io/magnetic" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-play"/></svg>מגנטים</a>
+            </div>
+          </article>
+
+          <article class="session has-thumb">
+            <div class="session-head">
+              <div class="session-num">07.5</div>
+              <div class="session-title-block">
+                <h4>Baba Is You — חשיבה מיחשובית</h4>
+                <div class="session-tags">
+                  <span class="tag lavender">חשיבה מיחשובית</span>
+                  <span class="tag mint">פתרון בעיות</span>
+                </div>
+              </div>
+            </div>
+            <div class="session-thumb t-yellow">
+              <img src="assets/games/baba-is-you.png" alt="Baba Is You" loading="lazy">
+              <div class="credit">© Baba Is You / Hempuli</div>
+            </div>
+            <p class="session-desc">פתרון בעיות מתוחכם. הרעיון: שינוי ההיגד משנה את הפתרון. משחק שמשנה איך חושבים על כללים.</p>
+            <div class="session-links">
+              <a class="link-chip play" href="https://hempuli.itch.io/baba" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-play"/></svg>Baba Is You</a>
+            </div>
+          </article>
+
+        </div>
+      </details>
+
+      <!-- ===== World 3 ===== -->
+      <details class="world-panel" data-world="3" id="w3">
+        <summary>
+          <div class="panel-num">WORLD 03</div>
+          <div class="panel-title">
+            <h3>חשיבה אסטרטגית</h3>
+            <div class="panel-meta">Levels 08-11 · 4 מפגשים</div>
+          </div>
+          <div class="panel-toggle" aria-hidden="true">+</div>
+        </summary>
+        <div class="session-list">
+
+          <article class="session has-thumb">
+            <div class="session-head">
+              <div class="session-num">08</div>
+              <div class="session-title-block">
+                <h4>Tower Defense — Toy Defense</h4>
+                <div class="session-tags">
+                  <span class="tag pink">אסטרטגיה</span>
+                  <span class="tag">ניהול משאבים</span>
+                </div>
+              </div>
+            </div>
+            <div class="session-thumb t-mint">
+              <img src="assets/games/toy-defense-shot.jpg" alt="Toy Defense" loading="lazy">
+              <div class="credit">© Toy Defense / CoolMathGames</div>
+            </div>
+            <p class="session-desc">משחק Toy Defense. מצגת עם צילומי מסך ותוצאות שאלון מהמפגש הקודם.</p>
+            <div class="session-links">
+              <a class="link-chip play" href="https://www.coolmathgames.com/0-toy-defense" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-play"/></svg>Toy Defense</a>
+              <a class="link-chip quiz" href="https://claude.ai/public/artifacts/6461da3e-0527-4e4d-b32f-75f119af468e" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-quiz"/></svg>שאלון 1</a>
+              <a class="link-chip quiz" href="https://sites.google.com/view/toydefence" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-quiz"/></svg>שאלון 2</a>
+            </div>
+          </article>
+
+          <article class="session has-thumb">
+            <div class="session-head">
+              <div class="session-num">09</div>
+              <div class="session-title-block">
+                <h4>Conflict Craft</h4>
+                <div class="session-tags">
+                  <span class="tag pink">אסטרטגיה</span>
+                  <span class="tag orange">עבודת צוות</span>
+                </div>
+              </div>
+            </div>
+            <div class="session-thumb t-sky">
+              <img src="assets/games/conflict-craft.png" alt="Conflict Craft" loading="lazy">
+              <div class="credit">© Conflict Craft</div>
+            </div>
+            <p class="session-desc">משחק אסטרטגיה נוסף. מעמיקים בתכנון, בנייה וקונפליקט.</p>
+            <div class="session-links">
+              <a class="link-chip play" href="https://drive.google.com/file/d/1g3_-pgOSKMTnocW-b7i5r0p6U5Lsy_7I/view?usp=drive_link" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-play"/></svg>Conflict Craft</a>
+            </div>
+          </article>
+
+          <article class="session has-thumb">
+            <div class="session-head">
+              <div class="session-num">10</div>
+              <div class="session-title-block">
+                <h4>קונפליקט</h4>
+                <div class="session-tags">
+                  <span class="tag pink">אסטרטגיה</span>
+                </div>
+              </div>
+            </div>
+            <div class="session-thumb t-pink">
+              <img src="assets/games/conflict.png" alt="Conflict" loading="lazy">
+              <div class="credit">© Conflict / old-games.org</div>
+            </div>
+            <p class="session-desc">משחק אסטרטגיה שלישי. השוואה בין שלושת המשחקים — מה ייחודי לכל אחד.</p>
+            <div class="session-links">
+              <a class="link-chip play" href="https://www.old-games.org/onlineGame/conflict" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-play"/></svg>קונפליקט</a>
+            </div>
+          </article>
+
+          <article class="session has-thumb">
+            <div class="session-head">
+              <div class="session-num">11</div>
+              <div class="session-title-block">
+                <h4>Red Alert 2 — הדובדבן</h4>
+                <div class="session-tags">
+                  <span class="tag pink">אסטרטגיה</span>
+                  <span class="tag yellow">טורניר</span>
+                  <span class="tag orange">עבודת צוות</span>
+                </div>
+              </div>
+            </div>
+            <div class="session-thumb t-mint">
+              <img src="assets/games/red-alert-2.jpg" alt="Red Alert 2" loading="lazy">
+              <div class="credit">© C&amp;C Red Alert 2</div>
+            </div>
+            <p class="session-desc">ארבעה שלבים: היכרות והתקנה, תחרות ראש-בראש, תחרות 2v2, טורניר כיתתי בסגנון גמר.</p>
+            <div class="session-links">
+              <a class="link-chip play" href="https://chronodivide.com/" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-play"/></svg>Red Alert 2</a>
+            </div>
+          </article>
+
+        </div>
+      </details>
+
+      <!-- ===== World 4 ===== -->
+      <details class="world-panel" data-world="4" id="w4">
+        <summary>
+          <div class="panel-num">WORLD 04</div>
+          <div class="panel-title">
+            <h3>אוריינות פיננסית</h3>
+            <div class="panel-meta">Levels 12-13 · 2 מפגשים</div>
+          </div>
+          <div class="panel-toggle" aria-hidden="true">+</div>
+        </summary>
+        <div class="session-list">
+
+          <article class="session has-thumb">
+            <div class="session-head">
+              <div class="session-num">12</div>
+              <div class="session-title-block">
+                <h4>מוכר הלימונדה</h4>
+                <div class="session-tags">
+                  <span class="tag orange">פיננסים</span>
+                  <span class="tag yellow">יזמות</span>
+                </div>
+              </div>
+            </div>
+            <div class="session-thumb t-sky">
+              <img src="assets/games/lemonade-stand.png" alt="Lemonade Stand" loading="lazy">
+              <div class="credit">© Lemonade Stand</div>
+            </div>
+            <p class="session-desc">מחירים, חיסכון, רווחים, בלאי, מלאי. חידון "איל הלימונדה" בסוף.</p>
+            <div class="session-links">
+              <a class="link-chip play" href="https://www.coolmathgames.com/0-lemonade-stand" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-play"/></svg>Lemonade Stand</a>
+              <a class="link-chip quiz" href="https://sites.google.com/view/lemonade3" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-quiz"/></svg>חידון איל הלימונדה</a>
+            </div>
+          </article>
+
+          <article class="session has-thumb">
+            <div class="session-head">
+              <div class="session-num">13</div>
+              <div class="session-title-block">
+                <h4>השקעות בבורסה</h4>
+                <div class="session-tags">
+                  <span class="tag orange">פיננסים</span>
+                  <span class="tag pink">סיכונים</span>
+                </div>
+              </div>
+            </div>
+            <div class="session-thumb t-yellow">
+              <img src="assets/games/young-investor.png" alt="Young Investor" loading="lazy">
+              <div class="credit">© The Young Investor</div>
+            </div>
+            <p class="session-desc">משחק המשקיעים הצעירים. משחק חיסכון. משחק Idle נוסף — בונים הבנה אינטואיטיבית של ריבית דריבית.</p>
+            <div class="session-links">
+              <a class="link-chip play" href="https://gd.games/lemonsgaming/theyounginvestor" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-play"/></svg>המשקיעים הצעירים</a>
+              <a class="link-chip play" href="https://sites.google.com/view/thesavinggame1" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-play"/></svg>משחק החיסכון</a>
+            </div>
+          </article>
+
+        </div>
+      </details>
+
+      <!-- ===== World 5 ===== -->
+      <details class="world-panel" data-world="5" id="w5">
+        <summary>
+          <div class="panel-num">WORLD 05</div>
+          <div class="panel-title">
+            <h3>מכניקות וז'אנרים</h3>
+            <div class="panel-meta">Levels 14-22 · 9 מפגשים</div>
+          </div>
+          <div class="panel-toggle" aria-hidden="true">+</div>
+        </summary>
+        <div class="session-list">
+
+          <article class="session has-thumb">
+            <div class="session-head">
+              <div class="session-num">14</div>
+              <div class="session-title-block">
+                <h4>מכניקות מעניינות</h4>
+                <div class="session-tags">
+                  <span class="tag lavender">מכניקה</span>
+                  <span class="tag">אנליזה</span>
+                </div>
+              </div>
+            </div>
+            <div class="session-thumb t-pink">
+              <img src="assets/games/2048.jpg" alt="2048" loading="lazy">
+              <div class="credit">© 2048</div>
+            </div>
+            <p class="session-desc">הכנה לבניית משחקים: להכיר סוגי מכניקות. סגירת שטחים, Bubbles, 2048.</p>
+            <div class="session-links">
+              <a class="link-chip play" href="https://xtdos.com/game.php?id=510" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-play"/></svg>סגירת שטחים</a>
+              <a class="link-chip play" href="https://play2048.co/" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-play"/></svg>2048</a>
+            </div>
+          </article>
+
+          <article class="session has-thumb">
+            <div class="session-head">
+              <div class="session-num">15</div>
+              <div class="session-title-block">
+                <h4>קווסטים</h4>
+                <div class="session-tags">
+                  <span class="tag">חשיבה מורכבת</span>
+                  <span class="tag orange">קריאה</span>
+                  <span class="tag">זיכרון</span>
+                </div>
+              </div>
+            </div>
+            <div class="session-thumb t-sky">
+              <img src="assets/games/loom.png" alt="Loom" loading="lazy">
+              <div class="credit">© Loom / Lucasfilm Games</div>
+            </div>
+            <p class="session-desc">רטרו, חשיבה מורכבת, עברית, זיכרון. ייתכן שנוריד לקובץ עבור אודיו וחוויה שלמה.</p>
+            <div class="session-links">
+              <a class="link-chip play" href="https://www.old-games.org/games/loomh" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-play"/></svg>האורגים</a>
+            </div>
+          </article>
+
+          <article class="session has-thumb">
+            <div class="session-head">
+              <div class="session-num">16</div>
+              <div class="session-title-block">
+                <h4>Plants vs Zombies</h4>
+                <div class="session-tags">
+                  <span class="tag pink">אסטרטגיה</span>
+                  <span class="tag mint">Tower Defense</span>
+                </div>
+              </div>
+            </div>
+            <div class="session-thumb t-mint">
+              <img src="assets/games/pvz.jpg" alt="Plants vs Zombies" loading="lazy">
+              <div class="credit">© Plants vs Zombies</div>
+            </div>
+            <p class="session-desc">טאוור דיפנס קלאסי. חידון זומבים בסוף המפגש.</p>
+            <div class="session-links">
+              <a class="link-chip play" href="https://kbhgames.com/game/plants-vs-zombies" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-play"/></svg>Plants vs Zombies</a>
+              <a class="link-chip quiz" href="https://shlomn01.github.io/Gaming-Course-Quiz/" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-quiz"/></svg>חידון זומבים</a>
+            </div>
+          </article>
+
+          <article class="session has-thumb">
+            <div class="session-head">
+              <div class="session-num">17</div>
+              <div class="session-title-block">
+                <h4>השוואת משחקים</h4>
+                <div class="session-tags">
+                  <span class="tag">אנליזה</span>
+                  <span class="tag yellow">ביקורת</span>
+                </div>
+              </div>
+            </div>
+            <div class="session-thumb t-mint">
+              <img src="assets/games/falafel-shot.jpg" alt="מלך הפלאפל" loading="lazy">
+              <div class="credit">© מלך הפלאפל</div>
+            </div>
+            <p class="session-desc">שני משחקים — אחד השראה לשני. מזהים השפעות, משווים מכניקות.</p>
+            <div class="session-links">
+              <a class="link-chip play" href="https://www.falafelgame.com/heb/falafel.html" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-play"/></svg>מלך הפלאפל</a>
+              <a class="link-chip play" href="https://rogalach.itch.io/underwear" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-play"/></svg>תחתונים וגופיות</a>
+              <a class="link-chip play" href="https://rogalach.itch.io/in-the-cloud" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-play"/></svg>דאבל</a>
+            </div>
+          </article>
+
+          <article class="session has-thumb">
+            <div class="session-head">
+              <div class="session-num">18</div>
+              <div class="session-title-block">
+                <h4>משחקי מלחמה</h4>
+                <div class="session-tags">
+                  <span class="tag pink">אסטרטגיה</span>
+                  <span class="tag">תחושת שליטה</span>
+                  <span class="tag orange">התמודדות</span>
+                </div>
+              </div>
+            </div>
+            <div class="session-thumb t-mint">
+              <img src="assets/games/iron-dome.jpg" alt="Iron Dome" loading="lazy">
+              <div class="credit">© Iron Dome / Wikipedia</div>
+            </div>
+            <p class="session-desc">תחושת שליטה, התמודדות, אסטרטגיה — משחקים מההקשר הישראלי העכשווי.</p>
+            <div class="session-links">
+              <a class="link-chip play" href="https://israelairdefense.com/" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-play"/></svg>כיפת ברזל</a>
+              <a class="link-chip play" href="https://israelairdefense.com/" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-play"/></svg>כיפת ברזל 2</a>
+              <a class="link-chip play" href="https://israelairdefense.com/" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-play"/></svg>עם כלביא 1</a>
+              <a class="link-chip play" href="https://israelairdefense.com/" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-play"/></svg>עם כלביא 2</a>
+              <a class="link-chip play" href="https://shlomn01.github.io/lions-roar/" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-play"/></svg>שאגת הארי</a>
+              <a class="link-chip play" href="https://claude.ai/public/artifacts/8e9ad034-3176-4248-8d6a-beb49ad821b2" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-play"/></svg>מפציץ הנפט</a>
+            </div>
+          </article>
+
+          <article class="session has-thumb">
+            <div class="session-head">
+              <div class="session-num">19</div>
+              <div class="session-title-block">
+                <h4>מה פשר המשחק?</h4>
+                <div class="session-tags">
+                  <span class="tag yellow">ביקורת</span>
+                  <span class="tag lavender">מסרים חברתיים</span>
+                </div>
+              </div>
+            </div>
+            <div class="session-thumb t-sky">
+              <img src="assets/games/runitback.png" alt="מהות החיים" loading="lazy">
+              <div class="credit">© Run It Back / Fireflies Jar</div>
+            </div>
+            <p class="session-desc">משחקי מסר — מהות החיים, התשקורת. משחק שמעביר מסר, לא רק מבדר.</p>
+            <div class="session-links">
+              <a class="link-chip play" href="https://firefliesjar.itch.io/runitback" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-play"/></svg>מהות החיים</a>
+              <a class="link-chip play" href="https://ncase.itch.io/wbwwb" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-play"/></svg>התשקורת</a>
+            </div>
+          </article>
+
+          <article class="session has-thumb">
+            <div class="session-head">
+              <div class="session-num">20</div>
+              <div class="session-title-block">
+                <h4>משחקי ציור</h4>
+                <div class="session-tags">
+                  <span class="tag">יצירתיות</span>
+                  <span class="tag lavender">הפשטה</span>
+                  <span class="tag sky">הנדסה</span>
+                </div>
+              </div>
+            </div>
+            <div class="session-thumb t-pink">
+              <img src="assets/games/car-drawing.jpg" alt="Car Drawing Game" loading="lazy">
+              <div class="credit">© Car Drawing / CoolMathGames</div>
+            </div>
+            <p class="session-desc">דמיון, הפשטה וציור. הנדסה ויצירתיות — לצייר פתרון, לא רק לחשב אותו.</p>
+            <div class="session-links">
+              <a class="link-chip play" href="https://www.coolmathgames.com/0-car-drawing-game" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-play"/></svg>מכונית</a>
+              <a class="link-chip play" href="https://www.coolmathgames.com/0-air-traffic-control-game" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-play"/></svg>מטוס</a>
+              <a class="link-chip play" href="https://www.coolmathgames.com/0-sugar-sugar-3" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-play"/></svg>סוכר</a>
+            </div>
+          </article>
+
+          <article class="session has-thumb">
+            <div class="session-head">
+              <div class="session-num">21</div>
+              <div class="session-title-block">
+                <h4>צללים</h4>
+                <div class="session-tags">
+                  <span class="tag lavender">הפשטה</span>
+                  <span class="tag">חשיבה מרחבית</span>
+                </div>
+              </div>
+            </div>
+            <div class="session-thumb t-yellow">
+              <img src="assets/games/shadows.gif" alt="My Shadows Are Bright" loading="lazy">
+              <div class="credit">© My Shadows Are Bright</div>
+            </div>
+            <p class="session-desc">פתרון בעיות דרך הפשטה. פלטפורמה הפוכה — מזיזים את הצל כדי לסדר את הדרך.</p>
+            <div class="session-links">
+              <a class="link-chip play" href="https://buday.itch.io/my-shadows-are-bright" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-play"/></svg>צללים 1</a>
+              <a class="link-chip play" href="https://ihapiece.itch.io/rift-shift" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-play"/></svg>צללים 2</a>
+              <a class="link-chip play" href="https://vimlark.itch.io/make-the-way" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-play"/></svg>פלטפורמה הפוכה</a>
+            </div>
+          </article>
+
+          <article class="session has-thumb">
+            <div class="session-head">
+              <div class="session-num">22</div>
+              <div class="session-title-block">
+                <h4>מכניקות שונות</h4>
+                <div class="session-tags">
+                  <span class="tag lavender">מכניקה</span>
+                  <span class="tag">מוטוריקה</span>
+                </div>
+              </div>
+            </div>
+            <div class="session-thumb t-mint">
+              <img src="assets/games/hivemind.gif" alt="Hivemind" loading="lazy">
+              <div class="credit">© Hivemind / Demberg Studios</div>
+            </div>
+            <p class="session-desc">להכיר סוגי מכניקות: להכניס זוג יחד, טנק, סקי, רכבת הכורים.</p>
+            <div class="session-links">
+              <a class="link-chip play" href="https://demberg-studios.itch.io/hivemind" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-play"/></svg>להכניס זוג יחד</a>
+              <a class="link-chip play" href="https://asterby.itch.io/assault-tank-alien-invasion" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-play"/></svg>טנק</a>
+              <a class="link-chip play" href="https://poki.com/il/g/bro-ski" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-play"/></svg>סקי</a>
+            </div>
+          </article>
+
+        </div>
+      </details>
+
+      <!-- ===== World 6 ===== -->
+      <details class="world-panel" data-world="6" id="w6">
+        <summary>
+          <div class="panel-num">WORLD 06</div>
+          <div class="panel-title">
+            <h3>מיינקראפט</h3>
+            <div class="panel-meta">Levels 23-28 · 6 מפגשים</div>
+          </div>
+          <div class="panel-toggle" aria-hidden="true">+</div>
+        </summary>
+        <div class="session-list">
+
+          <article class="session has-thumb">
+            <div class="session-head">
+              <div class="session-num">23</div>
+              <div class="session-title-block">
+                <h4>מיינקראפט 1 — הגדרות</h4>
+                <div class="session-tags">
+                  <span class="tag sky">התקנה</span>
+                  <span class="tag">הגדרות</span>
+                </div>
+              </div>
+            </div>
+            <div class="session-thumb t-sky">
+              <img src="assets/games/minecraft.jpg" alt="Minecraft" loading="lazy">
+              <div class="credit">© Minecraft</div>
+            </div>
+            <p class="session-desc">התקנה, סיסמאות, הגדרות ראשוניות. כולם עם סביבה אחידה לפני שמתחילים לבנות.</p>
+            <div class="session-links">
+              <a class="link-chip link" href="https://education.minecraft.net/en-us/get-started/download" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-link"/></svg>הורדה</a>
+              <a class="link-chip link" href="https://i-l.co/%D7%9E%D7%A9%D7%AA%D7%9E%D7%A9%D7%99%D7%9D-%D7%9C%D7%9E%D7%99%D7%99%D7%A0%D7%A7%D7%A8%D7%90%D7%A4%D7%98/" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-link"/></svg>מחולל סיסמאות זמניות</a>
+            </div>
+          </article>
+
+          <article class="session has-thumb">
+            <div class="session-head">
+              <div class="session-num">24</div>
+              <div class="session-title-block">
+                <h4>מיינקראפט 2 — בית</h4>
+                <div class="session-tags">
+                  <span class="tag sky">בנייה</span>
+                  <span class="tag">יצירתיות</span>
+                </div>
+              </div>
+            </div>
+            <div class="session-thumb t-yellow">
+              <img src="assets/games/grian.jpg" alt="Grian Minecraft" loading="lazy">
+              <div class="credit">© Grian</div>
+            </div>
+            <p class="session-desc">משימת בניית בית אישי, צילום ותיעוד. רפרנס: ערוצי BlueNerd ו-Grian ביוטיוב למדריכי בנייה.</p>
+            <div class="session-links">
+              <a class="link-chip video" href="https://www.youtube.com/@Grian" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-video"/></svg>Grian — YouTube</a>
+              <a class="link-chip video" href="https://www.youtube.com/@BlueNerd" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-video"/></svg>BlueNerd — YouTube</a>
+            </div>
+          </article>
+
+          <article class="session has-thumb">
+            <div class="session-head">
+              <div class="session-num">25</div>
+              <div class="session-title-block">
+                <h4>מיינקראפט 3 — לונה פארק</h4>
+                <div class="session-tags">
+                  <span class="tag sky">בנייה</span>
+                  <span class="tag orange">עבודת צוות</span>
+                </div>
+              </div>
+            </div>
+            <div class="session-thumb t-pink" role="img" aria-label="Ferris wheel">
+              <svg viewBox="0 0 120 90" preserveAspectRatio="xMidYMid slice">
+                <rect width="120" height="90" fill="#c6f4dc"/>
+                <circle cx="60" cy="38" r="28" fill="none" stroke="#1a1a1a" stroke-width="3"/>
+                <g stroke="#1a1a1a" stroke-width="2.5">
+                  <line x1="60" y1="10" x2="60" y2="66"/>
+                  <line x1="32" y1="38" x2="88" y2="38"/>
+                  <line x1="40" y1="18" x2="80" y2="58"/>
+                  <line x1="80" y1="18" x2="40" y2="58"/>
+                </g>
+                <circle cx="60" cy="38" r="6" fill="#ff4f93" stroke="#1a1a1a" stroke-width="2"/>
+                <g stroke="#1a1a1a" stroke-width="2">
+                  <rect x="56" y="4" width="8" height="8" fill="#ffd23f"/>
+                  <rect x="56" y="64" width="8" height="8" fill="#38bdf8"/>
+                  <rect x="26" y="34" width="8" height="8" fill="#a78bfa"/>
+                  <rect x="86" y="34" width="8" height="8" fill="#fb923c"/>
+                </g>
+                <rect x="50" y="66" width="20" height="14" fill="#1a1a1a"/>
+              </svg>
+            </div>
+            <p class="session-desc">בניית לונה פארק או גן חיות במשותף. כל קבוצה אחראית על אטרקציה — ובסוף משחקים זה אצל זה.</p>
+          </article>
+
+          <article class="session has-thumb">
+            <div class="session-head">
+              <div class="session-num">26</div>
+              <div class="session-title-block">
+                <h4>מיינקראפט 4 — המשך</h4>
+                <div class="session-tags">
+                  <span class="tag sky">בנייה</span>
+                  <span class="tag orange">עבודת צוות</span>
+                </div>
+              </div>
+            </div>
+            <div class="session-thumb t-sky" role="img" aria-label="Hourglass continuation">
+              <svg viewBox="0 0 120 90" preserveAspectRatio="xMidYMid slice">
+                <rect width="120" height="90" fill="#c6f4dc"/>
+                <g transform="translate(40 10)">
+                  <path d="M0 0 L40 0 L40 8 L28 24 L40 40 L40 56 L0 56 L0 40 L12 24 L0 8 Z" fill="#fdf4e3" stroke="#1a1a1a" stroke-width="3" stroke-linejoin="round"/>
+                  <path d="M3 3 L37 3 L31 19 L24 23 L20 23 L16 23 L9 19 Z" fill="#ffd23f"/>
+                  <rect x="19" y="23" width="2" height="12" fill="#ffd23f"/>
+                  <path d="M9 52 L31 52 L35 40 L20 32 L5 40 Z" fill="#ffd23f"/>
+                </g>
+                <g fill="none" stroke="#ff4f93" stroke-width="2.5" stroke-linecap="round">
+                  <path d="M10 78 L104 78"/>
+                  <polyline points="94,72 104,78 94,84"/>
+                </g>
+              </svg>
+            </div>
+            <p class="session-desc">המשך הבנייה המשותפת. "מסע אל העבר" — קוראים לדברים שבנו ומשפרים.</p>
+          </article>
+
+          <article class="session has-thumb">
+            <div class="session-head">
+              <div class="session-num">27</div>
+              <div class="session-title-block">
+                <h4>מיינקראפט 5 — Redstone</h4>
+                <div class="session-tags">
+                  <span class="tag pink">הנדסה</span>
+                  <span class="tag lavender">לוגיקה</span>
+                </div>
+              </div>
+            </div>
+            <div class="session-thumb t-pink">
+              <img src="assets/games/mumbo.jpg" alt="Mumbo Jumbo Redstone" loading="lazy">
+              <div class="credit">© Mumbo Jumbo</div>
+            </div>
+            <p class="session-desc">שימוש באלמנטים מתקדמים כמו רד-סטון. מתחילים להבין שמיינקראפט הוא גם מחשב לוגי.</p>
+            <div class="session-links">
+              <a class="link-chip video" href="https://www.youtube.com/@ThatMumboJumbo" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-video"/></svg>Mumbo Jumbo</a>
+              <a class="link-chip wiki" href="https://minecraft.wiki" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-wiki"/></svg>Minecraft Wiki</a>
+            </div>
+          </article>
+
+          <article class="session has-thumb">
+            <div class="session-head">
+              <div class="session-num">28</div>
+              <div class="session-title-block">
+                <h4>מיינקראפט 6 — קוד</h4>
+                <div class="session-tags">
+                  <span class="tag lavender">תכנות</span>
+                  <span class="tag">לוגיקה</span>
+                </div>
+              </div>
+            </div>
+            <div class="session-thumb t-yellow" role="img" aria-label="Code blocks">
+              <svg viewBox="0 0 120 90" preserveAspectRatio="xMidYMid slice">
+                <rect width="120" height="90" fill="#c6f4dc"/>
+                <g transform="translate(12 12)">
+                  <path d="M0 5 L32 5 L32 0 L42 0 L42 5 L54 5 L54 18 L0 18 Z" fill="#ff4f93" stroke="#1a1a1a" stroke-width="2.5"/>
+                </g>
+                <g transform="translate(12 34)">
+                  <path d="M0 5 L32 5 L32 0 L42 0 L42 5 L68 5 L68 18 L42 18 L42 23 L32 23 L32 18 L0 18 Z" fill="#ffd23f" stroke="#1a1a1a" stroke-width="2.5"/>
+                </g>
+                <g transform="translate(12 62)">
+                  <path d="M0 5 L56 5 L56 18 L0 18 Z" fill="#38bdf8" stroke="#1a1a1a" stroke-width="2.5"/>
+                </g>
+                <text x="88" y="44" font-family="'Space Grotesk'" font-weight="900" font-size="22" fill="#1a1a1a">&lt;/&gt;</text>
+              </svg>
+            </div>
+            <p class="session-desc">שימוש בקוד במיינקראפט דרך MakeCode. בלוקים ויזואליים שהופכים לפעולות בעולם.</p>
+            <div class="session-links">
+              <a class="link-chip link" href="https://minecraft.makecode.com/" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-code"/></svg>MakeCode for Minecraft</a>
+            </div>
+          </article>
+
+        </div>
+      </details>
+
+      <!-- ===== World 7: AI (NEW) ===== -->
+      <details class="world-panel" data-world="7" id="w7">
+        <summary>
+          <div class="panel-num">WORLD 07</div>
+          <div class="panel-title">
+            <h3>בונים עם AI</h3>
+            <div class="panel-meta">Levels 29-34 · 6 מפגשים <span class="new-tag">חדש</span></div>
+          </div>
+          <div class="panel-toggle" aria-hidden="true">+</div>
+        </summary>
+        <div class="session-list">
+
+          <article class="session has-thumb">
+            <div class="session-head">
+              <div class="session-num">29</div>
+              <div class="session-title-block">
+                <h4>AI 101 — היכרות ראשונה</h4>
+                <div class="session-tags">
+                  <span class="tag lavender">AI</span>
+                  <span class="tag">יצירתיות</span>
+                </div>
+              </div>
+            </div>
+            <div class="session-thumb t-yellow">
+              <img src="assets/games/gemini.png" alt="Gemini AI" loading="lazy">
+              <div class="credit">© Google Gemini</div>
+            </div>
+            <p class="session-desc">AI ככלי יצירה. שיחה עם ChatGPT, Claude ו-Gemini על רעיונות משחק. חידון: איזה תוכן נוצר ע"י AI ואיזה לא.</p>
+            <div class="session-links">
+              <a class="link-chip ai" href="https://claude.ai" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-ai"/></svg>Claude</a>
+              <a class="link-chip ai" href="https://chat.openai.com" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-ai"/></svg>ChatGPT</a>
+              <a class="link-chip ai" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-ai"/></svg>Gemini</a>
+              <a class="link-chip quiz" href="#"><svg class="icon"><use href="#i-quiz"/></svg>חידון AI או אנוש?</a>
+            </div>
+          </article>
+
+          <article class="session has-thumb">
+            <div class="session-head">
+              <div class="session-num">30</div>
+              <div class="session-title-block">
+                <h4>Game Design Document</h4>
+                <div class="session-tags">
+                  <span class="tag pink">דיזיין</span>
+                  <span class="tag lavender">AI</span>
+                  <span class="tag">תכנון</span>
+                </div>
+              </div>
+            </div>
+            <div class="session-thumb t-mint">
+              <img src="assets/games/claude-home.png" alt="Claude" loading="lazy">
+              <div class="credit">© Claude / Anthropic</div>
+            </div>
+            <p class="session-desc">ברינסטורם רעיון משחק עם AI. ניסוח GDD מסודר: מכניקה מרכזית, קהל יעד, יעדי משחק, לופ הליבה.</p>
+            <div class="session-links">
+              <a class="link-chip ai" href="https://claude.ai" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-ai"/></svg>Claude — ברינסטורם</a>
+              <a class="link-chip slides" href="#"><svg class="icon"><use href="#i-slides"/></svg>תבנית GDD</a>
+            </div>
+          </article>
+
+          <article class="session has-thumb">
+            <div class="session-head">
+              <div class="session-num">31</div>
+              <div class="session-title-block">
+                <h4>ספרייטים ורקעים — אומנות AI</h4>
+                <div class="session-tags">
+                  <span class="tag">אומנות</span>
+                  <span class="tag lavender">AI</span>
+                  <span class="tag pink">ויזואל</span>
+                </div>
+              </div>
+            </div>
+            <div class="session-thumb t-sky">
+              <img src="assets/games/midjourney.png" alt="Midjourney" loading="lazy">
+              <div class="credit">© Midjourney</div>
+            </div>
+            <p class="session-desc">Midjourney ו-Nano Banana (Gemini) ליצירת ספרייטים ורקעים בסגנון עקבי. שומרים פלטה אחידה למשחק.</p>
+            <div class="session-links">
+              <a class="link-chip ai" href="https://www.midjourney.com" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-art"/></svg>Midjourney</a>
+              <a class="link-chip ai" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-art"/></svg>Nano Banana</a>
+            </div>
+          </article>
+
+          <article class="session has-thumb">
+            <div class="session-head">
+              <div class="session-num">32</div>
+              <div class="session-title-block">
+                <h4>מוזיקה ו-SFX</h4>
+                <div class="session-tags">
+                  <span class="tag">מוזיקה</span>
+                  <span class="tag lavender">AI</span>
+                  <span class="tag sky">סאונד</span>
+                </div>
+              </div>
+            </div>
+            <div class="session-thumb t-pink">
+              <img src="assets/games/suno.jpg" alt="Suno AI Music" loading="lazy">
+              <div class="credit">© Suno</div>
+            </div>
+            <p class="session-desc">Suno ליצירת מוזיקת רקע, ElevenLabs לקולות ו-SFX. הרכבת סאונדטראק שלם למשחק.</p>
+            <div class="session-links">
+              <a class="link-chip ai" href="https://suno.com" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-music"/></svg>Suno</a>
+              <a class="link-chip ai" href="https://elevenlabs.io" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-music"/></svg>ElevenLabs</a>
+            </div>
+          </article>
+
+          <article class="session has-thumb">
+            <div class="session-head">
+              <div class="session-num">33</div>
+              <div class="session-title-block">
+                <h4>קוד AI-Assisted</h4>
+                <div class="session-tags">
+                  <span class="tag lavender">תכנות</span>
+                  <span class="tag pink">AI</span>
+                </div>
+              </div>
+            </div>
+            <div class="session-thumb t-yellow">
+              <img src="assets/games/godot.jpg" alt="Godot Engine" loading="lazy">
+              <div class="credit">© Godot Engine</div>
+            </div>
+            <p class="session-desc">כתיבת קוד משחק עם Cursor ו-Claude Code. Godot או HTML5 — בוחרים מנוע ומייצרים משחק ראשון רץ.</p>
+            <div class="session-links">
+              <a class="link-chip ai" href="https://cursor.com" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-code"/></svg>Cursor</a>
+              <a class="link-chip ai" href="https://claude.ai/code" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-code"/></svg>Claude Code</a>
+              <a class="link-chip link" href="https://godotengine.org" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-link"/></svg>Godot</a>
+            </div>
+          </article>
+
+          <article class="session has-thumb">
+            <div class="session-head">
+              <div class="session-num">34</div>
+              <div class="session-title-block">
+                <h4>Playtest & Polish</h4>
+                <div class="session-tags">
+                  <span class="tag yellow">ביקורת</span>
+                  <span class="tag orange">איטרציה</span>
+                </div>
+              </div>
+            </div>
+            <div class="session-thumb t-sky" role="img" aria-label="Playtest feedback">
+              <svg viewBox="0 0 120 90" preserveAspectRatio="xMidYMid slice">
+                <rect width="120" height="90" fill="#ffe4a8"/>
+                <g transform="translate(14 10)">
+                  <rect x="0" y="6" width="42" height="58" fill="#fdf4e3" stroke="#1a1a1a" stroke-width="2.5" rx="3"/>
+                  <rect x="15" y="0" width="12" height="10" rx="2" fill="#1a1a1a"/>
+                  <g stroke="#1a1a1a" stroke-width="2" fill="none" stroke-linecap="round">
+                    <path d="M6 20 L11 25 L17 18"/>
+                    <line x1="21" y1="22" x2="36" y2="22"/>
+                    <path d="M6 36 L11 41 L17 34"/>
+                    <line x1="21" y1="38" x2="36" y2="38"/>
+                    <path d="M6 52 L11 57 L17 50"/>
+                    <line x1="21" y1="54" x2="36" y2="54"/>
+                  </g>
+                </g>
+                <g transform="translate(68 26)">
+                  <path d="M5 32 L5 20 L10 20 L13 10 C 14 4, 20 4, 20 10 L20 20 L32 20 C 35 20, 35 25, 33 26 C 35 28, 35 32, 32 33 C 34 35, 34 38, 31 39 C 33 42, 29 45, 25 45 L10 45 L5 43 Z" fill="#6ee7b7" stroke="#1a1a1a" stroke-width="2.5" stroke-linejoin="round"/>
+                </g>
+              </svg>
+            </div>
+            <p class="session-desc">משחקים אצל חברים, אוספים משוב, מאתרים באגים, מבצעים איטרציות. לולאת שיפור ראשונה.</p>
+            <div class="session-links">
+              <a class="link-chip slides" href="#"><svg class="icon"><use href="#i-slides"/></svg>תבנית Playtest</a>
+            </div>
+          </article>
+
+        </div>
+      </details>
+
+      <!-- ===== World 8: BOSS ===== -->
+      <details class="world-panel" data-world="8" id="w8">
+        <summary>
+          <div class="panel-num">BOSS 35</div>
+          <div class="panel-title">
+            <h3>Level Design</h3>
+            <div class="panel-meta">Level 35 · הרמה הסופית <span class="boss-tag">BOSS</span></div>
+          </div>
+          <div class="panel-toggle" aria-hidden="true">+</div>
+        </summary>
+        <div class="session-list">
+
+          <article class="session has-thumb">
+            <div class="session-head">
+              <div class="session-num">35</div>
+              <div class="session-title-block">
+                <h4>Level Design — המשחק שלנו</h4>
+                <div class="session-tags">
+                  <span class="tag pink">דיזיין</span>
+                  <span class="tag yellow">יצירתיות</span>
+                  <span class="tag">פרזנטציה</span>
+                </div>
+              </div>
+            </div>
+            <div class="session-thumb t-mint">
+              <img src="assets/games/gmtk.jpg" alt="Game Maker's Toolkit" loading="lazy">
+              <div class="credit">© Game Maker's Toolkit</div>
+            </div>
+            <p class="session-desc">הרמה הסופית: אחרי שנה של ניתוח ובנייה, כל תלמיד מציג את המשחק/הרמה שעיצב. כיתת משחק — החברים משחקים ונותנים משוב.</p>
+            <div class="session-links">
+              <a class="link-chip slides" href="https://docs.google.com/presentation/d/1Q3HtgEB6EvB2ObrQ38RqeVYDBk1r7Ly3zc5gsL5LJic/present" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-slides"/></svg>מצגת Level Design</a>
+              <a class="link-chip video" href="https://www.youtube.com/@GMTK" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-video"/></svg>Game Maker's Toolkit</a>
+              <a class="link-chip video" href="https://www.youtube.com/@SnomanGaming" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#i-video"/></svg>Snoman Gaming</a>
+            </div>
+          </article>
+
+        </div>
+      </details>
+
+    </div>
+  </section>
+
+  <!-- ============ PRACTICAL INFO ============ -->
+  <section class="practical" id="about">
+    <div class="practical-header">
+      <div class="eyebrow-sm">◆ THE SMALL PRINT · לפני שמתחילים</div>
+      <h2>פרטים <span class="hl orange">פרקטיים</span></h2>
+    </div>
+
+    <div class="practical-grid">
+
+      <div class="info-card">
+        <div class="info-icon" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="#1a1a1a" stroke-width="2.5" stroke-linejoin="round">
+            <rect x="3" y="5" width="26" height="18" rx="2"/>
+            <line x1="3" y1="19" x2="29" y2="19"/>
+            <line x1="10" y1="27" x2="22" y2="27"/>
+            <line x1="16" y1="23" x2="16" y2="27"/>
+          </svg>
+        </div>
+        <h3>ציוד נדרש</h3>
+        <ul>
+          <li>מחשב עם כרטיס גרפיקה בסיסי</li>
+          <li>דפדפן כרום או אדג' מעודכן</li>
+          <li>אינטרנט יציב</li>
+          <li>אוזניות ומצלמה מתפקדת</li>
+        </ul>
+      </div>
+
+      <div class="info-card">
+        <div class="info-icon" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="#1a1a1a" stroke-width="2.5" stroke-linejoin="round">
+            <rect x="4" y="6" width="24" height="22" rx="2"/>
+            <line x1="4" y1="12" x2="28" y2="12"/>
+            <line x1="10" y1="4" x2="10" y2="8"/>
+            <line x1="22" y1="4" x2="22" y2="8"/>
+            <rect x="9" y="16" width="4" height="4" fill="#1a1a1a" stroke="none"/>
+            <rect x="19" y="16" width="4" height="4" fill="#1a1a1a" stroke="none"/>
+          </svg>
+        </div>
+        <h3>לוח זמנים</h3>
+        <ul>
+          <li>קורס שנתי · ספטמבר–יוני</li>
+          <li>35 מפגשים · כ-90 דקות כל אחד</li>
+          <li>כיתה אחת · שיעור שבועי</li>
+        </ul>
+      </div>
+
+      <div class="info-card">
+        <div class="info-icon" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round">
+            <path d="M8 10 Q4 10 4 16 L4 22 Q4 24 6 24 Q8 24 9 22 L11 18 L17 18 L19 22 Q20 24 22 24 Q26 24 26 22 L26 16 Q26 10 22 10 Z"/>
+            <circle cx="20" cy="15" r="1.5" fill="currentColor"/>
+            <circle cx="23" cy="18" r="1.5" fill="currentColor"/>
+            <line x1="7" y1="14" x2="13" y2="14"/>
+            <line x1="10" y1="11" x2="10" y2="17"/>
+          </svg>
+        </div>
+        <h3>כללי התנהגות</h3>
+        <ul>
+          <li>מצלמה פתוחה</li>
+          <li>שפה מכבדת</li>
+          <li>עבודה בשיתוף</li>
+          <li>שמירה על פרטיות</li>
+        </ul>
+      </div>
+
+      <div class="info-card">
+        <div class="info-icon" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="currentColor">
+            <path d="M16 2 L20 11 L30 12 L22 19 L25 29 L16 24 L7 29 L10 19 L2 12 L12 11 Z"/>
+          </svg>
+        </div>
+        <h3>הערכה</h3>
+        <ul>
+          <li>נוכחות והשתתפות</li>
+          <li>התקדמות במשחקים השונים</li>
+          <li>הגשת מטלות</li>
+          <li>רמת תוצרים</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section class="contact" id="contact">
+    <div class="contact-header">
+      <div class="eyebrow-sm">◆ Get in Touch · צור קשר</div>
+      <h2>רוצה <span class="hl">לדבר</span>?</h2>
+      <p>שאלה על הקורס, רעיון לשיתוף פעולה, או סתם רוצה להגיד שלום — מלאו את הטופס ואחזור אליכם.</p>
+    </div>
+
+    <form class="contact-form" id="contact-form" action="https://formsubmit.co/neufeldim@gmail.com" method="POST">
+      <input type="hidden" name="_subject" value="פנייה חדשה מאתר גיימינג בחינוך">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_template" value="table">
+      <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+
+      <div class="field">
+        <label for="cf-name">שם</label>
+        <input id="cf-name" type="text" name="שם" required autocomplete="name">
+      </div>
+
+      <div class="field">
+        <label for="cf-email">אימייל</label>
+        <input id="cf-email" type="email" name="אימייל" required autocomplete="email">
+      </div>
+
+      <div class="field">
+        <label for="cf-phone">טלפון (לא חובה)</label>
+        <input id="cf-phone" type="tel" name="טלפון" autocomplete="tel">
+      </div>
+
+      <div class="field">
+        <label for="cf-message">הודעה</label>
+        <textarea id="cf-message" name="הודעה" required></textarea>
+      </div>
+
+      <div id="form-status" class="form-status" role="status" aria-live="polite"></div>
+
+      <div class="submit-row">
+        <button type="submit">
+          שליחה ←
+        </button>
+      </div>
+    </form>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer">
+    <div class="footer-tape" aria-hidden="true">
+      ★ GAME OVER ★ INSERT COIN ★ CONTINUE? ★ GAME OVER ★ INSERT COIN ★ CONTINUE? ★ GAME OVER ★ INSERT COIN ★
+    </div>
+
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <h3>★ גיימינג בחינוך · שלומי נויפלד</h3>
+        <p>לימוד מיומנויות דרך משחקי מחשב · קורס שנתי לחטיבת ביניים (ז–ט) · 35 מפגשים ב-8 עולמות.</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>ניווט</h4>
+        <ul>
+          <li><a href="#top">ראש הדף</a></li>
+          <li><a href="#worlds">עולמות</a></li>
+          <li><a href="#sessions">מפגשים</a></li>
+          <li><a href="#about">פרטים פרקטיים</a></li>
+          <li><a href="#contact">צור קשר</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>עולמות AI</h4>
+        <ul>
+          <li><a href="#w7">בונים עם AI</a></li>
+          <li><a href="#w8">Level Design</a></li>
+          <li><a href="https://claude.ai" target="_blank" rel="noopener noreferrer">Claude</a></li>
+          <li><a href="https://www.midjourney.com" target="_blank" rel="noopener noreferrer">Midjourney</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 · גיימינג בחינוך</span>
+      <span>Designed with ♥ for middle school gamers</span>
+    </div>
+  </footer>
+
+  <script>
+    // smooth scroll for all in-page anchor links (nav, footer, logo, hero CTAs...)
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const href = a.getAttribute('href');
+        if (!href || href === '#' || href.length < 2) return;
+        // world cards get their own handler below (they also open the accordion)
+        if (a.classList.contains('world-card')) return;
+        const target = document.getElementById(href.slice(1));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          history.pushState(null, '', href);
+        }
+      });
+    });
+
+    // world card → open matching accordion panel and scroll to it
+    document.querySelectorAll('.world-card').forEach(card => {
+      card.addEventListener('click', e => {
+        const href = card.getAttribute('href') || '';
+        if (!href.startsWith('#w')) return;
+        const panel = document.querySelector(href);
+        if (!panel) return;
+        e.preventDefault();
+        panel.setAttribute('open', '');
+        // slight delay so browser finishes the open layout before scroll
+        requestAnimationFrame(() => {
+          panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+      // keyboard: Enter/Space trigger click
+      card.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          card.click();
+        }
+      });
+    });
+
+    // if URL arrives with #w{n} anchor, open that panel
+    if (location.hash && /^#w\d+$/.test(location.hash)) {
+      const panel = document.querySelector(location.hash);
+      if (panel) panel.setAttribute('open', '');
+    }
+
+    // contact form: submit via fetch so user stays on the page
+    const contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+      contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const statusEl = document.getElementById('form-status');
+        const submitBtn = contactForm.querySelector('button[type="submit"]');
+        statusEl.className = 'form-status';
+        statusEl.textContent = '';
+        submitBtn.disabled = true;
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'שולח...';
+
+        try {
+          const data = new FormData(contactForm);
+          const res = await fetch(contactForm.action, {
+            method: 'POST',
+            body: data,
+            headers: { 'Accept': 'application/json' }
+          });
+          if (res.ok) {
+            statusEl.className = 'form-status success';
+            statusEl.textContent = 'ההודעה נשלחה בהצלחה! אחזור אליכם בהקדם.';
+            contactForm.reset();
+          } else {
+            throw new Error('submission failed');
+          }
+        } catch (err) {
+          statusEl.className = 'form-status error';
+          statusEl.textContent = 'משהו השתבש בשליחה. נסו שוב, או שילחו ישירות למייל neufeldim@gmail.com';
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalText;
+        }
+      });
+    }
+  </script>
+</body>
+</html>
